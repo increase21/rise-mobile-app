@@ -1,0 +1,29 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/DMSans-Bold.ttf",
+      "sha1": "8f1d1ade3803efd38e7f6036c6f61d12ba23dd52"
+    },
+    {
+      "path": "src/assets/fonts/DMSans-Medium.ttf",
+      "sha1": "6c1f2f7c4e3a18f742adbc1a0a3bc57776267230"
+    },
+    {
+      "path": "src/assets/fonts/DMSans-Regular.ttf",
+      "sha1": "076cd96e8ef4aaeeae3f1b855207194de40d3154"
+    },
+    {
+      "path": "src/assets/fonts/TomatoGrotesk-Bold.ttf",
+      "sha1": "6ee534b1da02e8f3385715f656f1f324aee97cd8"
+    },
+    {
+      "path": "src/assets/fonts/TomatoGrotesk-Medium.ttf",
+      "sha1": "bbdb2de1437f261d6b7b540c4588fac0e925be03"
+    },
+    {
+      "path": "src/assets/fonts/TomatoGrotesk-Regular.ttf",
+      "sha1": "5b45240346ddb0578cd96e3f130dc331e0e672a5"
+    }
+  ]
+}

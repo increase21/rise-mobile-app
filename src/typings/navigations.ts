@@ -9,10 +9,10 @@ interface ISubNavigator<T extends ParamListBase, K extends keyof T> {
 }
 
 export type HometabParamList = {
-   [HOMESCREEN.INDEX_SCREEN]?: undefined;
-   [HOMESCREEN.WALLET_SCREEN]?: undefined;
-   [HOMESCREEN.FEED_SCREEN]?: undefined;
-   [HOMESCREEN.PLAN_SCREEN]?: undefined;
+   [HOMESCREEN.INDEX_SCREEN]: undefined;
+   [HOMESCREEN.WALLET_SCREEN]: undefined;
+   [HOMESCREEN.FEED_SCREEN]: undefined;
+   [HOMESCREEN.PLAN_SCREEN]: undefined;
    [HOMESCREEN.PROFILE_SCREEN]?: undefined;
 }
 export type HometabScreenProps<T extends keyof HometabParamList> = {
@@ -26,6 +26,7 @@ export type PlanScreenParamList = {
    [PLANSCREEN.CREATE_PLAN]: undefined;
    [PLANSCREEN.CREATE_PLAN2]: undefined;
    [PLANSCREEN.REVIEW_PLAN]: undefined;
+   [PLANSCREEN.PLAN_OVERVIEW]: undefined;
 }
 export type PlanScreenProps<T extends keyof PlanScreenParamList> = {
    navigation: any;
@@ -38,12 +39,13 @@ export type PlanScreenProps<T extends keyof PlanScreenParamList> = {
 
 
 export type AuthStackParamList = {
-   [AUTHSCREENS.ACCOUNT_INFO]?: undefined;
-   [AUTHSCREENS.CRAETE_ACCOUNT]?: undefined;
-   [AUTHSCREENS.SET_PIN]?: undefined;
-   [AUTHSCREENS.SET_PIN_CONFIRM]?: undefined;
-   [AUTHSCREENS.SIGN_IN]?: undefined;
-   [AUTHSCREENS.SIGN_UP_STORY]?: undefined;
+   [AUTHSCREENS.ACCOUNT_INFO]: undefined;
+   [AUTHSCREENS.CRAETE_ACCOUNT]: undefined;
+   [AUTHSCREENS.SET_PIN]: undefined;
+   [AUTHSCREENS.SET_PIN_CONFIRM]: undefined;
+   [AUTHSCREENS.SIGN_IN]: undefined;
+   [AUTHSCREENS.SIGN_UP_STORY]: undefined;
+   [AUTHSCREENS.SPLASH_SCREEN]: undefined;
 }
 
 export type RootStackParamList = {
@@ -53,7 +55,7 @@ export type RootStackParamList = {
 
 export type RootStackParam = RootStackParamList & AuthStackParamList
 
-export type StackScreenProps<T extends keyof RootStackParam> = {
+export type AuthScreenProps<T extends keyof RootStackParam> = {
    navigation: any;
    route: RouteProp<RootStackParam, T>;
 };

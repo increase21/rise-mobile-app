@@ -7,26 +7,37 @@ import { AppText } from "../components/app-text";
 import { COLORS } from "../constants/app-colors";
 import AppButton from "../components/app-button";
 import * as Animatable from 'react-native-animatable';
+import { XIcon } from "../assets/svg";
+import { AppSizeBox } from "./app-card";
 const { wp, hp } = useDimension()
 
 interface SuccessPageProps {
    title?: string;
    comment?: string;
    btnTitle?: string;
-   onPress?: () => void
+   status?: 'success' | 'error'
+   onPress?: () => void;
+   onCancel?: () => void
 }
 
 const SuccessPage = (props: SuccessPageProps) => (
    <Animatable.View style={dStyle.vStyle} animation="slideInUp" direction="alternate">
       <AppCircle width={wp(24)} height={hp(11)}>
-         <TickRight />
+         {props.status === "error" ? <XIcon stroke={COLORS.RED} width={wp(15)} height={hp(15)} /> : <TickRight />}
       </AppCircle>
-      <AppText fontFamily="Tomato" fontSize={4} textAlign="center" style={{ marginTop: hp(4), lineHeight: hp(2.7) }}>{props.title}</AppText>
+      <AppText fontFamily="Tomato" fontSize={wp(1.3)}
+         textAlign="center" style={{ marginTop: hp(4) }}>{props.title}</AppText>
       <AppText color={COLORS.GRAY1} textAlign="center" style={{ marginTop: 6 }}>{props.comment}</AppText>
-      <View style={{ width: '100%', marginTop: hp(35) }}>
+      <View style={{ width: '100%', marginTop: hp(30) }}>
          <AppButton onPress={props.onPress}>
             <AppText color={COLORS.WHITE} fontWeight="700">{props.btnTitle || "Okay"}</AppText>
          </AppButton>
+         <AppSizeBox marginTop={2} />
+         {props.status === "error" &&
+            <AppButton onPress={props.onCancel} backgroundColor={COLORS.GRAY4}>
+               <AppText color={COLORS.RED} fontWeight="700">{"Cancel"}</AppText>
+            </AppButton>
+         }
       </View>
    </Animatable.View>
 )

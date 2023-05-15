@@ -5,6 +5,7 @@ import { COLORS } from "../constants/app-colors";
 const { wp, hp } = useDimension()
 
 export interface AppCardProps extends ViewProps {
+   flex?: number
    padding?: number;
    paddingTop?: number;
    paddingHorizontal?: number;
@@ -49,6 +50,7 @@ const processPropsData = (props: AppCardProps) => ({
    ...(props.flexDirection && { flexDirection: props.flexDirection }),
    ...(props.justifyContent && { justifyContent: props.justifyContent }),
    ...(props.alignItems && { alignItems: props.alignItems }),
+   ...(props.flex && { flex: props.flex }),
 })
 
 const AppCard = (props: AppCardProps) => (
@@ -59,7 +61,7 @@ const AppCard = (props: AppCardProps) => (
 
 
 export const AppSizeBox = (props: AppCardProps) => (
-   <View style={[processPropsData(props)]}></View>
+   <View style={[processPropsData(props), props.style]}></View>
 )
 
 

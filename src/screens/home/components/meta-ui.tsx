@@ -9,14 +9,16 @@ import DotIndicator from "../../../components/app-dot-indicator";
 import AppButton from "../../../components/app-button";
 import { AppCircle } from "../../../components/custom-ui";
 import { TotalBalanceGradient } from "./home-gradients";
+import helpers from "../../../helpers";
+import { HOMESCREEN } from "../../../constants/screens";
 const { wp, hp } = useDimension()
 
 
-export const MetaUI = () => (
+export const MetaUI = (props: { name: string, bellCount: number, dayHour: number }) => (
    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
       <View>
-         <AppText>Good morning ☀️</AppText>
-         <AppText fontFamily="DMSans" fontSize={5}>Deborah</AppText>
+         <AppText>{props.dayHour > 16 ? 'Good evening' : props.dayHour > 11 ? 'Good afternoon' : ' Good morning'} ☀️</AppText>
+         <AppText fontFamily="DMSans" fontSize={5}>{props.name}</AppText>
       </View>
       <View style={dStyle.meta2block}>
          <View style={dStyle.earn30}>
@@ -24,15 +26,17 @@ export const MetaUI = () => (
          </View>
          <View style={{ position: 'relative', marginRight: wp(2) }}>
             <NotificationBell />
-            <AppCircle width={wp(4.5)} height={hp(2)} style={dStyle.bellRed}>
-               <AppText bold fontFamily="Tomato" fontSize={wp(.7)} color={COLORS.WHITE}>9+</AppText>
-            </AppCircle>
+            {props.bellCount > 0 &&
+               <AppCircle width={wp(4.5)} height={hp(2)} style={dStyle.bellRed}>
+                  <AppText bold fontFamily="Tomato" fontSize={wp(.7)} color={COLORS.WHITE}>{props.bellCount}{props.bellCount > 9 && '+'}</AppText>
+               </AppCircle>
+            }
          </View>
       </View>
    </View>
 )
 
-export const BalanceUI = () => (
+export const BalanceUI = (props: { totalBalance: number, navigation: any }) => (
    <React.Fragment>
       <AppCard style={{ borderColor: COLORS.WHITE, overflow: 'hidden' }}>
          <TotalBalanceGradient>
@@ -41,7 +45,7 @@ export const BalanceUI = () => (
                <PasswordClose width={wp(4)} />
             </View>
             <View style={{ width: wp(44), paddingVertical: hp(1.4), borderBottomWidth: 1, borderBottomColor: COLORS.GRAY2 }}>
-               <AppText fontSize={wp(2)} textAlign="center">$0.00</AppText>
+               <AppText fontSize={wp(2)} textAlign="center">${props.totalBalance}</AppText>
             </View>
             <View style={{ paddingVertical: hp(1.4), flexDirection: 'row', alignItems: 'center' }}>
                <AppText style={{ marginRight: wp(1) }}>Total Grains</AppText>
@@ -49,13 +53,13 @@ export const BalanceUI = () => (
                <AppText semiBold color={COLORS.GREEN} fontFamily="Tomato" style={{ marginHorizontal: wp(1) }}>0.20</AppText>
                <ArrowCurve strokeWidth={1} width={12} style={{ transform: [{ rotate: '-90deg' }] }} />
             </View>
-            <DotIndicator dotStyle={{ marginHorizontal: wp(1) }} />
+            <DotIndicator stage={1} activeDotStyle={{ width: hp(1.5), backgroundColor: COLORS.primary }} dotStyle={{ marginHorizontal: wp(1) }} />
          </TotalBalanceGradient>
       </AppCard>
       <AppButton backgroundColor={COLORS.WHITE} style={{
          borderWidth: 1, marginTop: hp(2.5),
          borderColor: COLORS.GRAY2, height: hp(6.4)
-      }}>
+      }} onPress={() => helpers.navigateToScreen(props.navigation, HOMESCREEN.WALLET_SCREEN, { fundPlan: true })}>
          <PlusIcon />
          <AppText bold style={{ marginLeft: 9 }}>Add money</AppText>
       </AppButton>

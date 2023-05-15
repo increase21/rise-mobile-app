@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View, SafeAreaView, ViewProps, ViewStyle, } from "react-native";
+import { StyleSheet, TouchableOpacity, View, SafeAreaView, ViewProps, ViewStyle, ActivityIndicator, } from "react-native";
 import appDimension from '../helpers/app-dimension'
 import { AppText } from "./app-text";
 import { KeyboardDelete } from "../assets/svg";
@@ -25,6 +25,12 @@ const dStyle = StyleSheet.create({
       overflow: 'hidden',
       justifyContent: 'center',
       alignItems: 'center'
+   },
+   appLayStyle: {
+      height: '100%',
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      position: 'relative'
    }
 })
 
@@ -48,13 +54,13 @@ export const AppCircle = (props: GrayCircleProps) => (
 )
 
 
-export const AppLayout = (props?: any) => (
+export const AppLayout = (props: { style?: ViewStyle, safeAreaView?: boolean, children?: any }) => (
    props?.safeAreaView === false ?
-      <View style={[{ height: '100%', paddingVertical: 10, paddingHorizontal: 20, position: 'relative' }, props.style]}>
+      <View style={[dStyle.appLayStyle, { backgroundColor: COLORS.WHITE }, props.style]}>
          {props?.children}
       </View> :
       <SafeAreaView style={{ backgroundColor: COLORS.WHITE }}>
-         <View style={[{ height: '100%', paddingVertical: 10, paddingHorizontal: 20, position: 'relative' }, props.style]}>
+         <View style={[dStyle.appLayStyle, props.style]}>
             {props?.children}
          </View>
       </SafeAreaView>
@@ -86,5 +92,14 @@ export const AppKeyBoard = (props?: AppKeyBoardProps) => (
       <KeyboardRow onPress={props?.onPress} title1="4" title2="5" title3="6" />
       <KeyboardRow onPress={props?.onPress} title1="7" title2="8" title3="9" />
       <KeyboardRow onPress={props?.onPress} title1="." title2="0" title3="x" />
+   </View>
+)
+
+export const AppIndicatorLoader = (props: { style?: ViewStyle, loaderColor?: string }) => (
+   <View style={[{
+      flexDirection: 'row', justifyContent: 'center', flex: 1,
+      backgroundColor: COLORS.WHITE, alignItems: 'center',
+   }, props.style]}>
+      <ActivityIndicator size="large" color={props.loaderColor || COLORS.primary} />
    </View>
 )

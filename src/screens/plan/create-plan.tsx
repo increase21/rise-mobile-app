@@ -10,6 +10,7 @@ import { HomePlanImg3, QuestionMark } from "../../assets/svg";
 import AppButton from "../../components/app-button";
 import { PlanScreenProps } from "../../typings/navigations";
 import { PLANSCREEN } from "../../constants/screens";
+import helpers from "../../helpers";
 const { hp, wp } = useDimension()
 
 interface PlanInfoRowProps {
@@ -47,7 +48,7 @@ export default ({ navigation }: PlanScreenProps<PLANSCREEN.CREATE_PLAN>) => (
          <PlanInfoRow imgSrc={<QuestionMark />} title="Turn on auto-invest" description="The easiest way to get your investment working for you is to fund to periodically." />
          <PlanInfoRow imgSrc={<QuestionMark />} title="Modify as you progress" description="You are in charge. Make changes to your plan, from adding funds, funding source, adding money to your wallet and more." />
          <AppSizeBox marginTop={hp(.7)} />
-         <AppButton>
+         <AppButton onPress={() => helpers.navigateToScreen(navigation, PLANSCREEN.CREATE_PLAN2)}>
             <AppText color={COLORS.WHITE} bold>Continue</AppText>
          </AppButton>
       </ScrollView>

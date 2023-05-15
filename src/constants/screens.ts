@@ -5,6 +5,7 @@ export const enum AUTHSCREENS {
    SIGN_UP_STORY = 'sign-up-story',
    CRAETE_ACCOUNT = 'create-account',
    ACCOUNT_INFO = 'account-info',
+   SPLASH_SCREEN = 'splash-screen',
 }
 
 export const enum HOMESCREEN {
@@ -17,6 +18,7 @@ export const enum HOMESCREEN {
 
 export const enum PLANSCREEN {
    INDEX_SCREEN = 'index-screen',
+   PLAN_OVERVIEW = 'plan-overview',
    CREATE_PLAN = 'create-plan',
    REVIEW_PLAN = 'review-plan',
    CREATE_PLAN2 = 'create-plan2'

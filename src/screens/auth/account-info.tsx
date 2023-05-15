@@ -10,21 +10,25 @@ import { ArrowCurve, CalenderIcon, PasswordClose } from '../../assets/svg'
 import { AppLayout } from "../../components/custom-ui";
 import CalendarUI from "./components/calendar-ui";
 import CountryList from "./components/country-list";
-import { StackScreenProps } from "../../typings/navigations";
+import { AuthScreenProps } from "../../typings/navigations";
 import { AUTHSCREENS } from "../../constants/screens";
 import authMethods from "./-auth-methods";
 const { wp, hp, height } = useDimension()
 
 
-export default ({ navigation }: StackScreenProps<AUTHSCREENS.CRAETE_ACCOUNT>) => {
+export default ({ navigation }: AuthScreenProps<AUTHSCREENS.CRAETE_ACCOUNT>) => {
    const [openModal, setOpenModal] = React.useState(false)
    const [regData, setRegData] = React.useState({
       dob: '', showCountry: false, selectedCountry: '+234',
-      fName: '', lName: '', phoneNumber: ''
+      fName: '', lName: '', phoneNumber: '', nickName: ''
    })
 
    const fnameRef = React.useRef<any>(null)
    const phoneInputRef = React.useRef<any>(null)
+
+   let aMinDate: any = new Date()
+   aMinDate.setFullYear(aMinDate.getFullYear() - 18)
+   aMinDate = aMinDate.toISOString().substring(0, 10)
 
    React.useEffect(() => {
       // fnameRef?.current?.focus()
@@ -47,6 +51,9 @@ export default ({ navigation }: StackScreenProps<AUTHSCREENS.CRAETE_ACCOUNT>) =>
                   viewProps={{ style: { marginTop: 18 } }} textContentType="familyName"
                   onChangeText={txt => setRegData({ ...regData, lName: txt })}
                />
+               <AppInput autoCapitalize="none" returnKeyType="next" label="Nick Name" maxLength={25}
+                  onChangeText={txt => setRegData({ ...regData, nickName: txt })}
+                  viewProps={{ style: { marginTop: 18 } }} textContentType="nickname" />
 
                <AppCustomInput keepOnFocus={regData.phoneNumber.length !== 0} label="Phone Number" viewProps={{ style: dStyle.phoneDStyl }}>
                   <TouchableOpacity style={dStyle.phoneCode} onPress={() => {
@@ -85,7 +92,7 @@ export default ({ navigation }: StackScreenProps<AUTHSCREENS.CRAETE_ACCOUNT>) =>
             </View>
          </ScrollView>
          <Modal isVisible={openModal} backdropOpacity={0.2} style={{ justifyContent: 'flex-end' }}>
-            <CalendarUI onSubmit={(date?: any) => {
+            <CalendarUI minDate={aMinDate} startDate={aMinDate} numberOfYearsToRun={100} onSubmit={(date?: any) => {
                setRegData({ ...regData, dob: date })
                setOpenModal(false)
             }} onClose={() => setOpenModal(false)} />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, Keyboard } from 'react-native';
 
 import {
    CodeField,
@@ -9,6 +9,7 @@ import {
 } from 'react-native-confirmation-code-field';
 import useDimension from '../../../helpers/app-dimension';
 import { COLORS } from '../../../constants/app-colors';
+import { AppText } from '../../../components/app-text';
 const { wp, hp } = useDimension()
 const CELL_COUNT = 6;
 
@@ -19,6 +20,9 @@ interface OTPProps {
 
 const OtpScreen = (props: OTPProps) => {
    const ref = useBlurOnFulfill({ value: props?.value, cellCount: CELL_COUNT });
+   React.useEffect(() => {
+      Keyboard.addListener("keyboardWillShow", () => Keyboard.dismiss())
+   }, [])
    return (
       <CodeField
          ref={ref}
@@ -29,9 +33,9 @@ const OtpScreen = (props: OTPProps) => {
          keyboardType="number-pad"
          textContentType="oneTimeCode"
          renderCell={({ index, symbol, isFocused }) => (
-            <Text key={index} style={[styles.cell, isFocused && styles.focusCell]}>
+            <AppText key={index} style={[styles.cell, isFocused && styles.focusCell]}>
                {(symbol ? '•' : '') || (isFocused ? <Cursor /> : null)}
-            </Text>
+            </AppText>
          )}
       />
    );

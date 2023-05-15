@@ -1,10 +1,11 @@
 import React from "react";
-import { AppText } from "../../components/app-text";
-import { AppLayout } from "../../components/custom-ui";
-import AppHeader from "../../components/app-header";
+import SuccessPage from "../../components/success-page";
+import { HometabScreenProps } from "../../typings/navigations";
+import { AUTHSCREENS, HOMESCREEN, ROOTSCREEN } from "../../constants/screens";
+import helpers from "../../helpers";
+import AuthMethods from "../auth/-auth-methods";
 
-export default () => (
-   <AppLayout>
-      <AppHeader />
-   </AppLayout>
+export default ({ navigation }: HometabScreenProps<HOMESCREEN.FEED_SCREEN>) => (
+   <SuccessPage title="Profile" comment="Coming soon" btnTitle="Logout"
+      onPress={() => AuthMethods.logoutAccount(navigation)} />
 )

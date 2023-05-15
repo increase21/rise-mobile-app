@@ -8,12 +8,12 @@ import { reactQueryClient } from './src/store/react-query-client';
 
 
 class App extends React.Component {
-   componentDidMount(): void {
-      listenOrientationChange(this)
-   }
-   componentWillUnmount(): void {
-      removeOrientationListener()
-   }
+   // componentDidMount(): void {
+   //    listenOrientationChange(this)
+   // }
+   // componentWillUnmount(): void {
+   //    removeOrientationListener()
+   // }
 
    render(): React.ReactNode {
       return (

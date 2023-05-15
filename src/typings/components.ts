@@ -12,6 +12,7 @@ export interface AppSvgProps {
    stroke?: string;
    style?: ViewStyle;
    fill?: string;
-   strokeWidth?: number,
+   strokeWidth?: number;
+   fillOpacity?: number;
    children?: any
 }

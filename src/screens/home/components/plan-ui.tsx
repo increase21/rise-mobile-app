@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import Swiper from 'react-native-swiper'
 import { AppText } from "../../../components/app-text";
 import useDimension from "../../../helpers/app-dimension";
@@ -9,17 +9,31 @@ import AppCard, { AppSizeBox } from "../../../components/app-card";
 import DotIndicator from "../../../components/app-dot-indicator";
 import AppButton from "../../../components/app-button";
 import { AppCircle } from "../../../components/custom-ui";
+import { ComponentNavigation } from "../../../typings/components";
+import helpers from "../../../helpers";
+import { HOMESCREEN, PLANSCREEN } from "../../../constants/screens";
+import { FR_AC_JSB, FR_JSB } from "../../../constants/global-style";
 const { wp, hp } = useDimension()
 
 interface CreatedPlanProps {
    title: string;
    amount: string;
    assetType: string,
-   imageSrc: React.ReactNode
+   imageSrc: React.ReactNode;
+   navigation: any;
+   dataID: any
 }
-const CreatePlan = () => (
+
+interface PlanUIProps {
+   data: { items: [], item_count: 0 };
+   isLoading: boolean;
+   navigation: any;
+}
+
+const CreatePlan = ({ navigation }: ComponentNavigation) => (
    <AppCard style={dStyle.slide1} backgroundColor={COLORS.GRAY2} alignItems="center">
-      <AppCircle width={wp(13)} height={hp(5.6)} isButton
+      <AppCircle width={wp(12.2)} height={hp(5.6)} isButton
+         onPress={() => helpers.navigateToScreen(navigation, HOMESCREEN.PLAN_SCREEN, { screen: PLANSCREEN.CREATE_PLAN })}
          style={{ backgroundColor: 'rgba(64, 187, 195, 0.15)', marginBottom: hp(1) }}>
          <PlusIcon fill="transparent" strokeWidth={2} />
       </AppCircle>
@@ -28,63 +42,67 @@ const CreatePlan = () => (
 )
 
 const CreatedPlan = (props: CreatedPlanProps) => (
-   <AppCard style={dStyle.activePlan} backgroundColor={COLORS.GRAY2}>
+   <TouchableOpacity style={[dStyle.activePlan, { borderRadius: 10 }]}
+      onPress={() => helpers.navigateToScreen(props.navigation, HOMESCREEN.PLAN_SCREEN,
+         { screen: PLANSCREEN.PLAN_OVERVIEW, params: { id: props.dataID } })}>
       {props.imageSrc}
       <View style={dStyle.actPlanContnt}>
          <AppText color={COLORS.WHITE}>{props.title}</AppText>
          <AppText color={COLORS.WHITE} fontSize={wp(1.5)}>{props.amount}</AppText>
          <AppText color={COLORS.WHITE}>{props.assetType}</AppText>
       </View>
-   </AppCard>
+   </TouchableOpacity>
 )
 
-export const PlanUI = () => (
+export const PlanUI = (props: PlanUIProps) => (
    <View>
-      <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-         <AppText fontFamily="Tomato" fontSize={wp(1.1)} >Create a plan</AppText>
-         <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
-            <AppText style={{ marginRight: wp(1) }} fontFamily="DMSans" fontSize={3.2} bold>View all plans</AppText>
-
-            <ArrowCurve width={wp(2.7)} style={{ transform: [{ rotate: '-90deg' }] }} />
-         </View>
+      <View style={FR_JSB}>
+         <AppText fontFamily="Tomato" fontSize={wp(1.1)} >{props?.data?.item_count > 0 ? 'Your Plans' : 'Create a plan'}</AppText>
+         <TouchableOpacity style={FR_AC_JSB} onPress={() => helpers.navigateToScreen(props.navigation, HOMESCREEN.PLAN_SCREEN)}>
+            <AppText color={props?.data?.item_count > 0 ? COLORS.primary : COLORS.GRAY2}
+               style={{ marginRight: wp(1) }} fontFamily="DMSans" fontSize={3.2} bold>View all plans</AppText>
+            <ArrowCurve stroke={props?.data?.item_count > 0 ? undefined : COLORS.GRAY2} width={wp(2.7)}
+               style={{ transform: [{ rotate: '-90deg' }] }} />
+         </TouchableOpacity>
       </View>
-      <AppText style={{ marginVertical: wp(3) }}>Start your investment journey by creating a plan</AppText>
+      <AppSizeBox marginTop={hp(.2)} />
+      {!(props?.data?.item_count || props?.data?.item_count === 0) &&
+         <>
+            <AppSizeBox marginTop={hp(.2)} />
+            <AppText>Start your investment journey by creating a plan</AppText>
+         </>
+      }
       <View style={{ position: 'relative', height: hp(30) }}>
          <ScrollView decelerationRate="fast" pagingEnabled snapToInterval={wp(50)}
             snapToAlignment="start" showsHorizontalScrollIndicator={false}
             horizontal bounces={false} scrollEventThrottle={10}>
-            <CreatePlan />
-            <CreatedPlan imageSrc={<HomePlanImg1 height={"100%"} />} title="Build Wealth" amount="$188.25" assetType="Mixed assets" />
-            <CreatedPlan imageSrc={<HomePlanImg2 height={"100%"} />}
-               title="Build Life" amount="$388.00" assetType="Mixed assets" />
+            <CreatePlan navigation={props.navigation} />
+            {props?.data?.items?.length > 0 && props?.data?.items?.map((item: any, index: number) => (
+               <CreatedPlan title={item.plan_name} amount={item?.target_amount} key={index}
+                  imageSrc={(index % 2 === 0) ? <HomePlanImg1 height={"100%"} /> : <HomePlanImg2 height={"100%"} />}
+                  assetType="Mixed assets" dataID={item?.id} navigation={props?.navigation} />
+            ))}
          </ScrollView>
       </View>
    </View>
 )
 
-
 export const PlanHelp = () => (
    <AppCard backgroundColor={COLORS.WHITE} padding={wp(.8)}
-      flexDirection="row" justifyContent="space-between"
-      style={{
-         borderRadius: 12,
-         shadowColor: 'rgba(53, 71, 89, 0.15)',
-         shadowOffset: { height: 1, width: 1 },
-         shadowOpacity: 1,
-         shadowRadius: 6
-      }}
-   >
+      flexDirection="row" justifyContent="space-between" style={dStyle.helpV}>
       <View style={{ flexDirection: 'row', alignItems: 'center', borderRadius: 6 }}>
-         <AppCircle width={wp(6)} height={wp(6)}>
+         <AppCircle width={wp(6)} height={hp(2.7)}>
             <QuestionMark />
          </AppCircle>
          <AppText style={{ marginLeft: wp(3) }}>Need Help</AppText>
       </View>
-      <AppButton style={{ width: wp(36) }}>
+      <AppButton style={{ width: wp(35) }}>
          <AppText color={COLORS.WHITE}>Contact us</AppText>
       </AppButton>
    </AppCard>
 )
+
+
 
 const dStyle = StyleSheet.create({
    swipeWrapper: {
@@ -107,11 +125,17 @@ const dStyle = StyleSheet.create({
       width: wp(50),
       overflow: 'hidden',
       alignItems: 'center',
-      // justifyContent: 'center',
       marginRight: wp(5)
    },
    actPlanContnt: {
       position: 'absolute', bottom: 0, left: 0,
       paddingHorizontal: wp(4), paddingVertical: hp(2.5)
+   },
+   helpV: {
+      borderRadius: 12,
+      shadowColor: 'rgba(53, 71, 89, 0.15)',
+      shadowOffset: { height: 1, width: 1 },
+      shadowOpacity: 1, elevation: 1, borderWidth: 1,
+      shadowRadius: 6, borderColor: 'rgba(53, 71, 89, 0.1)'
    }
 })

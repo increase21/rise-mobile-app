@@ -7,7 +7,7 @@ import useDimension from '../../helpers/app-dimension'
 import { AppText } from '../../components/app-text'
 import AppButton from '../../components/app-button'
 import { AUTHSCREENS } from '../../constants/screens'
-import { StackScreenProps } from '../../typings/navigations'
+import { AuthScreenProps } from '../../typings/navigations'
 import { ScreenIndicatorProps, ScreenPageProps, StoryScreenData } from './components/story-data-list'
 const { wp, hp } = useDimension()
 
@@ -43,7 +43,7 @@ const ScreenPage = ({ banner, swiperRef, index, color, renderButton, buttonTitle
 )
 
 
-export default ({ navigation }: StackScreenProps<AUTHSCREENS.SIGN_UP_STORY>) => {
+export default ({ navigation }: AuthScreenProps<AUTHSCREENS.SIGN_UP_STORY>) => {
    const swiperRef = React.useRef<null>(null)
    return (
       <Swiper ref={swiperRef}

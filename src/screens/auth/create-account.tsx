@@ -10,10 +10,11 @@ import { AppLayout } from "../../components/custom-ui";
 import { TickRight } from "../../assets/svg/tick-right";
 import { AuthStackParamList } from "../../typings/navigations";
 import { AUTHSCREENS, ROOTSCREEN } from "../../constants/screens";
-import { StackScreenProps } from "../../typings/navigations";
+import { AuthScreenProps } from "../../typings/navigations";
 import AuthMethods from "./-auth-methods";
 import SuccessPage from "../../components/success-page";
 import helpers from "../../helpers";
+import { globalData } from "../../store";
 const { wp, hp, height } = useDimension()
 
 interface XterIndicator {
@@ -55,17 +56,19 @@ const checkXterExist = (props = { type: '', value: '' }): Boolean => {
    }
 }
 
-export default ({ navigation, route }: StackScreenProps<AUTHSCREENS.CRAETE_ACCOUNT>) => {
+export default ({ navigation, route }: AuthScreenProps<AUTHSCREENS.CRAETE_ACCOUNT>) => {
+   const accountData: any = globalData.userData
+
    const [xterCheck, setXterCheck] = React.useState({
-      showPass: false, email: '', password: '', nickName: '',
-      showSuccess: false
+      showPass: false, email: '', password: '', nickName: '', showSuccess: false
    })
-   const { processReqest, isLoading } = AuthMethods.createAccount()
+   const { processReqest, isLoading } = AuthMethods.createAccount(navigation, setXterCheck)
    let prevData = React.useRef<object | any>(route.params)
 
    let hasMinimum = checkXterExist({ type: '8', value: xterCheck.password })
    let hasSpecialXter = checkXterExist({ type: '', value: xterCheck.password })
    let hasUpper = checkXterExist({ type: 'uppercase', value: xterCheck.password })
+
    return (
       <React.Fragment>
          <AppLayout style={{ backgroundColor: COLORS.WHITE, height: '100%' }}>
@@ -79,10 +82,6 @@ export default ({ navigation, route }: StackScreenProps<AUTHSCREENS.CRAETE_ACCOU
                   keyboardType="email-address" label="Email address"
                   viewProps={{ style: { marginTop: wp(10) } }}
                   onChangeText={txt => setXterCheck({ ...xterCheck, email: txt })} />
-
-               <AppInput autoCapitalize="none" returnKeyType="next" label="Nick Name" maxLength={25}
-                  onChangeText={txt => setXterCheck({ ...xterCheck, nickName: txt })}
-                  viewProps={{ style: { marginTop: 18 } }} textContentType="nickname" />
                <View>
                   <AppInput autoCorrect={false} textContentType="password" secureTextEntry={!xterCheck.showPass}
                      style={{ paddingRight: wp(10), maxWidth: '90%' }} label="Password"
@@ -95,7 +94,7 @@ export default ({ navigation, route }: StackScreenProps<AUTHSCREENS.CRAETE_ACCOU
                </View>
 
                <XterIndicator hasMinimum={hasMinimum} hasSpecialXter={hasSpecialXter} hasUpper={hasUpper} />
-               <AppButton isLoading={isLoading} onPress={() => processReqest({ ...prevData.current, ...xterCheck }, navigation)}
+               <AppButton isLoading={isLoading} onPress={() => processReqest({ ...prevData.current, ...xterCheck })}
                   style={{ marginTop: 20 }} disabled={(!hasMinimum || !hasSpecialXter || !hasUpper || xterCheck.email.length === 0)}>
                   <AppText color={COLORS.WHITE} style={{ fontWeight: '700' }} >Sign In</AppText>
                </AppButton>
@@ -103,7 +102,14 @@ export default ({ navigation, route }: StackScreenProps<AUTHSCREENS.CRAETE_ACCOU
          </AppLayout >
          {xterCheck.showSuccess &&
             <SuccessPage title={"You just created your\nRise account"} comment={"Welcome to Rise, let’s take\nyou home"}
-               onPress={() => helpers.resetNavigation(navigation, AUTHSCREENS.SIGN_IN)} />
+               onPress={() => {
+                  //if the login has been successful
+                  if (accountData && accountData.token) {
+                     helpers.resetNavigation(navigation, AUTHSCREENS.SET_PIN)
+                  } else {
+                     helpers.resetNavigation(navigation, AUTHSCREENS.SIGN_IN)
+                  }
+               }} />
          }
       </React.Fragment>
    )

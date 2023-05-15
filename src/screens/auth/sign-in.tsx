@@ -7,7 +7,7 @@ import AppInput from "../../components/app-input";
 import AppButton from "../../components/app-button";
 import { PasswordClose, PasswordOpen } from '../../assets/svg'
 import { AppLayout } from "../../components/custom-ui";
-import { StackScreenProps } from "../../typings/navigations";
+import { AuthScreenProps } from "../../typings/navigations";
 import { AUTHSCREENS, HOMESCREEN, ROOTSCREEN } from "../../constants/screens";
 import AuthMethods from "./-auth-methods";
 import helpers from "../../helpers";
@@ -15,10 +15,9 @@ import helpers from "../../helpers";
 const { wp, hp, height } = useDimension()
 
 
-export default ({ navigation }: StackScreenProps<AUTHSCREENS.SIGN_IN>) => {
+export default ({ navigation }: AuthScreenProps<AUTHSCREENS.SIGN_IN>) => {
    const [loginData, setLoginData] = React.useState({ email: '', password: '', seePass: false })
-   const { processReqest, isLoading } = AuthMethods.loginAccount()
-
+   const { processReqest, data, isLoading } = AuthMethods.loginAccount(navigation)
    return (
       <AppLayout style={{ backgroundColor: COLORS.WHITE, height: '100%' }}>
          <StatusBar barStyle="dark-content" backgroundColor={COLORS.WHITE} />
@@ -41,10 +40,7 @@ export default ({ navigation }: StackScreenProps<AUTHSCREENS.SIGN_IN>) => {
                </TouchableOpacity>
 
             </View>
-            <AppButton isLoading={isLoading}
-               //onPress={() => processReqest(loginData, navigation)}
-               onPress={() => navigation.navigate(AUTHSCREENS.SET_PIN)}
-            >
+            <AppButton isLoading={isLoading} onPress={() => processReqest(loginData)}>
                <AppText bold color={COLORS.WHITE}>
                   Sign In
                </AppText>

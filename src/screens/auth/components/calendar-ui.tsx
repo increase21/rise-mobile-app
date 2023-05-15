@@ -11,19 +11,29 @@ const { wp } = useDimension()
 interface CalendarUIProps {
    onSubmit: (value?: string) => void;
    onClose: () => void;
+   startDate?: string;
+   numberOfYearsToRun: number,
+   maxDate?: string;
+   minDate?: string
 }
 
-const generateYears = (count: number, startYear: number) => {
+const generateYears = (numberOfYearsToRun: number, startYear: number) => {
    let yGen = []
-   for (let i = count; i > 0; i--) {
-      yGen.push(startYear--)
+   if (numberOfYearsToRun > 0) {
+      for (let i = 0; i < numberOfYearsToRun; i++) {
+         yGen.push(startYear++)
+      }
+   } else {
+      for (let i = numberOfYearsToRun; i > 0; i--) {
+         yGen.push(startYear--)
+      }
    }
    return yGen
 }
 
-const DropDownItem = (props: { setYear?: any, startYear?: any }) => (
+const DropDownItem = (props: { setYear?: any, startYear?: any, numberOfYearsToRun?: any }) => (
    <SelectDropdown
-      data={generateYears(50, props?.startYear)}
+      data={generateYears(props.numberOfYearsToRun || 50, props?.startYear)}
       onSelect={(selectedItem, index) => {
          props?.setYear(selectedItem + '-01-06')
          // console.log(selectedItem, index)
@@ -38,18 +48,19 @@ const DropDownItem = (props: { setYear?: any, startYear?: any }) => (
 )
 
 const CalendarUI = (props: CalendarUIProps) => {
-   let newDate = new Date()
-   newDate.setFullYear(newDate.getFullYear() - 18)
-   let mnDate = newDate.toISOString()?.substring(0, 10)
+   let newDate = props.startDate ? new Date(props.startDate) : new Date()
+   // newDate.setFullYear(newDate.getFullYear())
    const [selected, setSelected] = useState('');
-   const [myYear, setMyYear] = React.useState(mnDate)
+   const [myYear, setMyYear] = React.useState(newDate.toISOString()?.substring(0, 10))
+
    return (
       <View style={{ borderRadius: 5, backgroundColor: COLORS.WHITE, paddingBottom: 20, marginBottom: 20 }}>
-         <DropDownItem setYear={setMyYear} startYear={newDate.getFullYear()} />
+         <DropDownItem numberOfYearsToRun={props.numberOfYearsToRun} setYear={setMyYear} startYear={newDate.getFullYear()} />
          <Calendar
             onDayPress={day => setSelected(day.dateString)}
             initialDate={myYear}
-            maxDate={`${newDate.getFullYear()}-12-31`}
+            minDate={props.minDate}
+            maxDate={props.maxDate}
             markedDates={{
                [selected]: {
                   selected: true, disableTouchEvent: true,

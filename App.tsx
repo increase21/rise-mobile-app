@@ -7,7 +7,7 @@ import RootStack from './src/navigations/root-stack';
 import { reactQueryClient } from './src/store/react-query-client';
 import { COLORS } from './src/constants/app-colors';
 
-const CustomToast = (props?: any) => (
+const CustomToast = (props: object): React.ReactElement => (
    <ErrorToast {...props}
       style={{ height: 55, backgroundColor: COLORS.ORANGE }}
       text1Style={{ fontSize: 17, color: COLORS.WHITE }}

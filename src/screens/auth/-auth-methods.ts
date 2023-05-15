@@ -11,27 +11,27 @@ class authMethods {
 
    validateAccountData(data: CreateAccountProps, navigation: any): void {
       //validate the data that is coming in
-      if (!data.fName || !/^[a-z\-]+$/i.test(data.fName)) {
+      if (!data.fName || !/^[a-z\-]+$/i.test(data.fName.trim())) {
          return helpers.showToast(!data.fName ? "first name is required" : "Only alphabet is required for firstname")
       }
 
-      if (!data.lName || !/^[a-z\-]+$/i.test(data.lName)) {
+      if (!data.lName || !/^[a-z\-]+$/i.test(data.lName.trim())) {
          return helpers.showToast(!data.lName ? "last name is required" : "Only alphabet is required for lastname")
       }
 
       if (data.phoneNumber) {
-         if (!/^[0-9]+$/.test(data.phoneNumber)) {
+         if (!/^[0-9]+$/.test(data.phoneNumber.trim())) {
             return helpers.showToast("A valid phone number is required")
          }
       }
 
       if (data.nickName) {
-         if (!/^[\w]+$/i.test(data.nickName)) {
+         if (!/^[\w]+$/i.test(data.nickName.trim())) {
             return helpers.showToast("Nickname must not have spaces or special characters")
          }
       }
 
-      if (!data.dob || !/\d{4}-\d{2}-\d{2}/.test(data.dob)) {
+      if (!data.dob || !/\d{4}-\d{2}-\d{2}/.test(data.dob.trim())) {
          return helpers.showToast("A valid date of birth is required")
       }
 

@@ -23,13 +23,13 @@ interface PlanGraphChild {
    totalAmount: number
 }
 
-type genYearRes = {
+type GenYearRes = {
    yearArray: string[];
    monthCount: number;
    year: string;
 }
 
-const generateYear = (selectedDate: string): genYearRes => {
+const generateYear = (selectedDate: string): GenYearRes => {
    //if there's not date
    if (!selectedDate) return { yearArray: [], monthCount: 0, year: '' }
    let dnNow = new Date().getFullYear()
@@ -41,6 +41,7 @@ const generateYear = (selectedDate: string): genYearRes => {
    }
    yrsNum = yrsNum.sort(() => Math.random() - Math.random()).slice(0, 5)
    yrsNum.push(String(dnAfter))
+   yrsNum.sort((a, b) => parseInt(a) - parseInt(b))
    return {
       yearArray: yrsNum,
       monthCount: diff * 12,

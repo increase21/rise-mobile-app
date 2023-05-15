@@ -15,7 +15,7 @@ class utilityFunctions {
       return new Promise((resolve, reject) => {
          //create a timeout
          let timeoutId = setTimeout(() => {
-            console.log("request time up")
+            // console.log("request time up")
             reject(new Error("promise timeout"))
          }, ms);
          // when the promise resolves

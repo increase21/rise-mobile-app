@@ -7,7 +7,7 @@ import { COLORS } from "../../../constants/app-colors";
 import AppCard from "../../../components/app-card";
 import DotIndicator from "../../../components/app-dot-indicator";
 import AppButton from "../../../components/app-button";
-import { AppCircle } from "../../../components/custom-ui";
+import { AppCircle, BellRedIndicator } from "../../../components/custom-ui";
 import { TotalBalanceGradient } from "./home-gradients";
 import helpers from "../../../helpers";
 import { HOMESCREEN } from "../../../constants/screens";
@@ -26,11 +26,7 @@ export const MetaUI = (props: { name: string, bellCount: number, dayHour: number
          </View>
          <View style={{ position: 'relative', marginRight: wp(2) }}>
             <NotificationBell />
-            {props.bellCount > 0 &&
-               <AppCircle width={wp(4.5)} height={hp(2)} style={dStyle.bellRed}>
-                  <AppText bold fontFamily="Tomato" fontSize={wp(.7)} color={COLORS.WHITE}>{props.bellCount}{props.bellCount > 9 && '+'}</AppText>
-               </AppCircle>
-            }
+            {props.bellCount > 0 && <BellRedIndicator bellCount={props.bellCount} />}
          </View>
       </View>
    </View>

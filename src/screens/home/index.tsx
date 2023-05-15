@@ -34,7 +34,7 @@ export default ({ navigation }: HometabScreenProps<HOMESCREEN.INDEX_SCREEN>) => 
          <ScrollView contentContainerStyle={{ backgroundColor: '#fcfcfc' }} showsVerticalScrollIndicator={false}>
             <HomeGradients>
                <AppSizeBox marginTop={Platform.OS === "ios" ? 6 : 4} />
-               <MetaUI name={userData?.first_name} bellCount={1} dayHour={new Date().getHours()} />
+               <MetaUI name={userData?.first_name} bellCount={2} dayHour={new Date().getHours()} />
                <AppSizeBox marginTop={1} />
                <BalanceUI totalBalance={userData?.total_balance} navigation={navigation} />
             </HomeGradients>

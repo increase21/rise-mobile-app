@@ -31,6 +31,10 @@ const dStyle = StyleSheet.create({
       paddingVertical: 10,
       paddingHorizontal: 20,
       position: 'relative'
+   },
+   bellRed: {
+      backgroundColor: COLORS.RED, marginTop: hp(-1),
+      position: 'absolute', top: 0, right: 0, marginRight: wp(-2)
    }
 })
 
@@ -102,4 +106,10 @@ export const AppIndicatorLoader = (props: { style?: ViewStyle, loaderColor?: str
    }, props.style]}>
       <ActivityIndicator size="large" color={props.loaderColor || COLORS.PRIMARY} />
    </View>
+)
+
+export const BellRedIndicator = (props: { bellCount: number }) => (
+   <AppCircle width={wp(4)} height={hp(2)} style={dStyle.bellRed}>
+      <AppText bold fontFamily="Tomato" fontSize={wp(.7)} color={COLORS.WHITE}>{props.bellCount > 9 ? '9+' : props.bellCount}</AppText>
+   </AppCircle>
 )

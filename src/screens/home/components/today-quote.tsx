@@ -17,7 +17,7 @@ export const TodayQuote = () => {
    const { isLoading, data, refetch } = AuthMethods.getQuotes(true)
    let shareMsg: ShareContent = {
       title: "Today's Quote",
-      message: data?.data?.quote + "\n" + data?.data?.authour + 'Quote'
+      message: data?.data?.quote + "\n~" + data?.data?.author + 'Quote~'
    }
    return (
       <AppCard backgroundColor={COLORS.PRIMARY} padding={wp(.8)}>

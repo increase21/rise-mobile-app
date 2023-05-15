@@ -1,4 +1,4 @@
-export interface createAccountProps {
+export type createAccountProps = {
    fName?: string;
    lName?: string;
    nickName?: string;
@@ -9,7 +9,7 @@ export interface createAccountProps {
    selectedCountry?: string
 }
 
-export interface loginAccountProps {
+export type loginAccountProps = {
    email: string;
    password: string
 }

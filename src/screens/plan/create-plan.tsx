@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { AppText } from "../../components/app-text";
 import { AppCircle, AppLayout } from "../../components/custom-ui";
 import AppHeader from "../../components/app-header";
@@ -35,9 +35,10 @@ const PlanInfoRow = (props: PlanInfoRowProps) => (
 
 export default ({ navigation }: PlanScreenProps<PLANSCREEN.CREATE_PLAN>) => (
    <AppLayout>
+      <StatusBar barStyle="dark-content" backgroundColor={COLORS.WHITE} translucent={false} />
       <AppHeader backIcon="close" title="Create plan" />
       <ScrollView showsVerticalScrollIndicator={false}>
-         <AppSizeBox marginTop={hp(.3)} />
+         <AppSizeBox marginTop={hp(.5)} />
          <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <AppText color={COLORS.GRAY1}>Reach your goals faster</AppText>
             <AppSizeBox marginTop={hp(.8)} />

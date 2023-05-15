@@ -15,7 +15,7 @@ interface SuccessPageProps {
    title?: string;
    comment?: string;
    btnTitle?: string;
-   status?: 'success' | 'error'
+   status?: 'success' | 'error';
    onPress?: () => void;
    onCancel?: () => void
 }

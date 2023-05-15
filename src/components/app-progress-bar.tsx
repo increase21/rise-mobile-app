@@ -7,14 +7,13 @@ const { hp } = useDimension()
 
 interface AppProgressBarProps {
    rootStyle?: ViewStyle,
-   barStyle?: ViewStyle | any,
+   barStyle?: ViewStyle;
    progress?: number
 }
 
 const AppProgressBar = (props: AppProgressBarProps) => (
    <View style={[dStyle.vStyle, props.rootStyle]}>
-      <View style={[dStyle.bStyle, props.barStyle,
-      props.progress && { width: String(props.progress + '%') }]}></View>
+      <View style={[dStyle.bStyle, props.barStyle, props.progress ? { width: String(props.progress + '%') } : {}]}></View>
    </View>
 )
 
@@ -29,7 +28,7 @@ const dStyle = StyleSheet.create({
       overflow: 'hidden'
    },
    bStyle: {
-      backgroundColor: COLORS.primary,
+      backgroundColor: COLORS.PRIMARY,
       height: '100%',
       width: '0%',
       borderRadius: 50

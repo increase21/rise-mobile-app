@@ -18,7 +18,7 @@ interface AppTextProps extends TextProps {
 
 const processTextStyle = (props: AppTextProps, wp: any): TextStyle | any => {
    return {
-      ...{ fontSize: wp(3.5), },
+      ...{ fontSize: wp(3.6), color: '#222222' },
       ...(props?.fontSize && { fontSize: wp(props?.fontSize) }),
       ...(props?.color && { color: props.color }),
       ...(props?.textAlign && { textAlign: props.textAlign }),

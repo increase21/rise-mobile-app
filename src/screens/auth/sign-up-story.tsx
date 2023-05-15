@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, ScrollView, StatusBar, StyleSheet, View } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { LeftArrow, } from '../../assets/svg'
 import { COLORS } from '../../constants/app-colors'
@@ -21,7 +21,7 @@ const ScreenIndicator = (props: ScreenIndicatorProps) => (
 )
 
 const ScreenPage = ({ banner, swiperRef, index, color, renderButton, buttonTitle }: ScreenPageProps) => (
-   <View style={dStyle.slide1}>
+   <View style={[dStyle.slide1, { backgroundColor: banner.bgColor }]}>
       <Image source={banner.img} style={dStyle.imgStyle} />
       <ScreenIndicator stage={1} backgroundColor={color} />
       <View style={{ width: '100%', marginTop: wp(15) }}>
@@ -44,16 +44,19 @@ const ScreenPage = ({ banner, swiperRef, index, color, renderButton, buttonTitle
 
 
 export default ({ navigation }: AuthScreenProps<AUTHSCREENS.SIGN_UP_STORY>) => {
-   const swiperRef = React.useRef<null>(null)
+   const swiperRef = React.useRef(null)
    return (
-      <Swiper ref={swiperRef}
-         style={dStyle.wrapper} showsPagination={false} loop={false}
-         showsButtons={false}>
-         {StoryScreenData.map((data, key) => <ScreenPage banner={data} index={key} key={key}
-            color={data.color} swiperRef={swiperRef}
-            renderButton={data.renderButton && data.renderButton({ navigation: navigation })}
-         />)}
-      </Swiper>
+      <ScrollView showsVerticalScrollIndicator={false}>
+         <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
+         <Swiper ref={swiperRef}
+            style={dStyle.wrapper} showsPagination={false} loop={false}
+            showsButtons={false}>
+            {StoryScreenData.map((data, key) => <ScreenPage banner={data} index={key} key={key}
+               color={data.color} swiperRef={swiperRef}
+               renderButton={data.renderButton && data.renderButton({ navigation: navigation })}
+            />)}
+         </Swiper>
+      </ScrollView>
    )
 }
 
@@ -65,7 +68,8 @@ const dStyle = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#fffbf7',
-      paddingVertical: 10, paddingHorizontal: 20,
+      paddingVertical: 10,
+      paddingHorizontal: 20,
    },
    slide2: {
       flex: 1,
@@ -93,7 +97,7 @@ const dStyle = StyleSheet.create({
       width: 6, backgroundColor: COLORS.GRAY2
    },
    nextBtn: {
-      width: 103, justifyContent: 'space-between',
+      width: wp(24), justifyContent: 'space-between',
       padding: wp(4), backgroundColor: 'rgba(113, 135, 156, 0.1)'
    },
    prevBtn: {

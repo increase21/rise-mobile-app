@@ -1,7 +1,7 @@
 import React from "react";
 import { LeftArrow, PlusIcon, QuestionMark, SettingsIcon } from "../../assets/svg";
 
-export const screenData = [
+export const ScreenData = [
    {
       title: "Naria Debit Transfer",
       description: "Timeline - 12min",

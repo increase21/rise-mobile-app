@@ -1,6 +1,6 @@
 import React from "react";
 // import { HomeGradient } from "../../assets/svg/home-gradient";
-import { ImageBackground, Platform, ScrollView, View } from "react-native";
+import { ImageBackground, Platform, ScrollView, StatusBar, View } from "react-native";
 import { AppText } from "../../components/app-text";
 import useDimension from "../../helpers/app-dimension";
 import { AppLogoGray, NotificationBell, PlusIcon } from "../../assets/svg";
@@ -30,9 +30,10 @@ export default ({ navigation }: HometabScreenProps<HOMESCREEN.INDEX_SCREEN>) => 
 
    return (
       <React.Fragment>
+         <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
          <ScrollView contentContainerStyle={{ backgroundColor: '#fcfcfc' }} showsVerticalScrollIndicator={false}>
             <HomeGradients>
-               <AppSizeBox marginTop={Platform.OS === "ios" ? 6 : 2} />
+               <AppSizeBox marginTop={Platform.OS === "ios" ? 6 : 4} />
                <MetaUI name={userData?.first_name} bellCount={1} dayHour={new Date().getHours()} />
                <AppSizeBox marginTop={1} />
                <BalanceUI totalBalance={userData?.total_balance} navigation={navigation} />

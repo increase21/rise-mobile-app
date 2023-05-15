@@ -6,34 +6,40 @@ import { View } from 'react-native';
 import AppButton from '../../../components/app-button';
 import { AppText } from '../../../components/app-text';
 import useDimension from '../../../helpers/app-dimension';
+import helpers from '../../../helpers';
 const { wp } = useDimension()
 
 interface CalendarUIProps {
    onSubmit: (value?: string) => void;
    onClose: () => void;
-   startDate?: string;
+   startDate: string;
    numberOfYearsToRun: number,
    maxDate?: string;
    minDate?: string
 }
 
-const generateYears = (numberOfYearsToRun: number, startYear: number) => {
+type genYearParam = {
+   numberOfYearsToRun: number,
+   startYear: number
+}
+
+const generateYears = ({ numberOfYearsToRun, startYear }: genYearParam): number[] => {
    let yGen = []
    if (numberOfYearsToRun > 0) {
       for (let i = 0; i < numberOfYearsToRun; i++) {
          yGen.push(startYear++)
       }
    } else {
-      for (let i = numberOfYearsToRun; i > 0; i--) {
+      for (let i = 0; i > numberOfYearsToRun; i--) {
          yGen.push(startYear--)
       }
    }
    return yGen
 }
 
-const DropDownItem = (props: { setYear?: any, startYear?: any, numberOfYearsToRun?: any }) => (
+const DropDownItem = (props: { setYear: any, startYear: number, numberOfYearsToRun: number }) => (
    <SelectDropdown
-      data={generateYears(props.numberOfYearsToRun || 50, props?.startYear)}
+      data={generateYears({ numberOfYearsToRun: props.numberOfYearsToRun || 50, startYear: props?.startYear })}
       onSelect={(selectedItem, index) => {
          props?.setYear(selectedItem + '-01-06')
          // console.log(selectedItem, index)
@@ -64,17 +70,21 @@ const CalendarUI = (props: CalendarUIProps) => {
             markedDates={{
                [selected]: {
                   selected: true, disableTouchEvent: true,
-                  selectedColor: COLORS.primary,
+                  selectedColor: COLORS.PRIMARY,
 
                }
             }}
-            theme={{ arrowColor: COLORS.primary }}
+            theme={{ arrowColor: COLORS.PRIMARY }}
          />
          <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
             <AppButton onPress={() => props.onClose()} backgroundColor={COLORS.GRAY2} style={{ width: wp(25), height: wp(10) }}>
                <AppText color={COLORS.BLACK1}>Close</AppText>
             </AppButton>
-            <AppButton onPress={() => props.onSubmit(selected)} style={{ width: wp(25), height: wp(10) }}>
+            <AppButton onPress={() => {
+               //if there's no date select
+               if (!selected) return helpers.showToast("Select a date")
+               props.onSubmit(selected)
+            }} style={{ width: wp(25), height: wp(10) }}>
                <AppText color={COLORS.WHITE} fontWeight='700'>Okay</AppText>
             </AppButton>
          </View>

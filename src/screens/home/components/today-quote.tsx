@@ -20,7 +20,7 @@ export const TodayQuote = () => {
       message: data?.data?.quote + "\n" + data?.data?.authour + 'Quote'
    }
    return (
-      <AppCard backgroundColor={COLORS.primary} padding={wp(.8)}>
+      <AppCard backgroundColor={COLORS.PRIMARY} padding={wp(.8)}>
          <AppText bold textTransform="uppercase" color={COLORS.WHITE}>Today's quotes</AppText>
          <View style={{
             borderWidth: 1, marginTop: hp(3),
@@ -32,7 +32,7 @@ export const TodayQuote = () => {
          <AppSizeBox marginVertical={2} />
          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <AppText bold color={COLORS.WHITE}>{data?.data?.author}</AppText>
-            <AppCircle isButton height={hp(4.8)}
+            <AppCircle isButton height={hp(5.2)}
                width={wp(10)} style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
                onPress={() => Share.share(shareMsg)}
             >

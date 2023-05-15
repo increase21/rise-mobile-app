@@ -9,13 +9,12 @@ import { FR_AC_JSB, FR_JC_AC } from "../../constants/global-style";
 import AuthMethods from "./-auth-methods";
 import { AuthScreenProps } from "../../typings/navigations";
 import { AUTHSCREENS, ROOTSCREEN } from "../../constants/screens";
-import helpers from "../../helpers";
 const { wp, hp } = useDimension()
 
 export default ({ navigation }: AuthScreenProps<AUTHSCREENS.SPLASH_SCREEN>) => {
    const { isLoading, error, data } = AuthMethods.validateSession('token-confirm', navigation)
    return (
-      <View style={{ flex: 1, backgroundColor: COLORS.primary, }}>
+      <View style={{ flex: 1, backgroundColor: COLORS.PRIMARY, }}>
          <StatusBar barStyle="light-content" translucent={true} backgroundColor="transparent" />
 
          <View style={{ flex: 1, marginTop: hp(18), alignItems: 'center', }}>

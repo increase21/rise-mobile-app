@@ -17,8 +17,12 @@ import AppProgressBar from "../../components/app-progress-bar";
 import CalendarUI from "../auth/components/calendar-ui";
 const { hp, wp } = useDimension()
 
+type runPageResult = {
+   headerTitle: string;
+   contentTitle: string
+}
 
-const runPageContent = (stage: number): { headerTitle: string, contentTitle: string } => {
+const runPageContent = (stage: number): runPageResult => {
    return {
       headerTitle: stage === 1 ? 'Goal name' : stage === 2 ? 'Target amount' : 'Target date',
       contentTitle: stage === 1 ? 'What are you saving for' : stage === 2 ? 'How much do need?' : 'When do you want to withdraw?'
@@ -33,7 +37,7 @@ export default ({ navigation }: PlanScreenProps<PLANSCREEN.CREATE_PLAN2>) => {
       focusActive: false, headerTitle: 'Goal name',
       openModal: false
    })
-   const inputRef = React.useRef<any>(null)
+   const inputRef: any = React.useRef(null)
    let planMinDate: any = new Date()
    planMinDate.setFullYear(planMinDate.getFullYear() + 1)
    planMinDate = planMinDate.toISOString().substring(0, 10)
@@ -46,10 +50,12 @@ export default ({ navigation }: PlanScreenProps<PLANSCREEN.CREATE_PLAN2>) => {
                   ...planState, stage: planState.stage - 1,
                   headerTitle: runPageContent(planState.stage - 1).headerTitle,
                })
+            } else {
+               navigation?.goBack()
             }
          }}
          />
-         <ScrollView showsVerticalScrollIndicator={false}>
+         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
             <AppSizeBox marginTop={hp(.5)} />
             <View>
                <AppText color={COLORS.GRAY1}>Question {planState.stage} of 3</AppText>
@@ -70,7 +76,7 @@ export default ({ navigation }: PlanScreenProps<PLANSCREEN.CREATE_PLAN2>) => {
                         } else {
                            setPlanState({ ...planState, amount: txt })
                         }
-                     }} /> :
+                     }} keyboardType={planState.stage === 2 ? "number-pad" : "default"} /> :
                   <React.Fragment>
                      <AppText bold>{planState.createdAt || 'Choose a date'}</AppText>
                      <TouchableOpacity onPress={() => setPlanState({ ...planState, openModal: true })}>
@@ -107,7 +113,6 @@ export default ({ navigation }: PlanScreenProps<PLANSCREEN.CREATE_PLAN2>) => {
          </ScrollView>
          <Modal isVisible={planState.openModal} backdropOpacity={0.2} style={{ justifyContent: 'flex-end' }}>
             <CalendarUI startDate={planMinDate} minDate={planMinDate} numberOfYearsToRun={100} onSubmit={(date?: any) => {
-               console.log("selected date", date)
                setPlanState({ ...planState, openModal: false, createdAt: date })
             }} onClose={() => setPlanState({ ...planState, openModal: false })} />
          </Modal>
@@ -123,7 +128,7 @@ const dStyle = StyleSheet.create({
       flexDirection: 'row', alignItems: 'center'
    },
    pStage: {
-      backgroundColor: COLORS.primary,
+      backgroundColor: COLORS.PRIMARY,
       width: '33.33%', height: '100%'
    },
    iStyle: {

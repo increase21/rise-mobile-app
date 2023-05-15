@@ -18,7 +18,7 @@ const AppInput = React.forwardRef<TextInput, AppInput>((props, ref) => {
    const [isFocus, setIsFocus] = React.useState(false)
    const [inputTxt, setInputTxt] = React.useState('')
    return (
-      <View {...props?.viewProps} style={[dStyle.vwStyl, props?.viewProps?.style, isFocus && { borderColor: COLORS.primary }]}>
+      <View {...props?.viewProps} style={[dStyle.vwStyl, props?.viewProps?.style, isFocus && { borderColor: COLORS.PRIMARY }]}>
          {((isFocus || props.keepOnFocus) && props.label) && <AppText {...props?.textProps} style={[dStyle.textStyl, props?.textProps?.style]} >{props?.label}</AppText>}
          <TextInput {...props} ref={ref} placeholder={isFocus ? '' : props?.label}
             placeholderTextColor={props?.placeholderTextColor || COLORS.BLACK1}
@@ -44,7 +44,7 @@ const AppInput = React.forwardRef<TextInput, AppInput>((props, ref) => {
 })
 
 export const AppCustomInput = (props: AppInput) => (
-   <View {...props?.viewProps} style={[dStyle.vwStyl, { paddingHorizontal: 15 }, props?.viewProps?.style, props?.keepOnFocus && { borderColor: COLORS.primary }]}>
+   <View {...props?.viewProps} style={[dStyle.vwStyl, { paddingHorizontal: 15 }, props?.viewProps?.style, props?.keepOnFocus && { borderColor: COLORS.PRIMARY }]}>
       {props.label && props.keepOnFocus && <AppText {...props?.textProps} style={[dStyle.textStyl, props?.textProps?.style]} >{props?.label}</AppText>}
       {props?.children}
    </View>
@@ -55,7 +55,7 @@ const dStyle = StyleSheet.create({
    textStyl: {
       position: 'absolute', top: 0,
       marginTop: hp(-1.4), backgroundColor: COLORS.WHITE,
-      color: COLORS.primary, fontWeight: '700',
+      color: COLORS.PRIMARY, fontWeight: '700',
       fontSize: wp(2.6), left: 0, marginLeft: wp(3.5),
       paddingHorizontal: 8,
    },
@@ -67,7 +67,7 @@ const dStyle = StyleSheet.create({
    vwStyl: {
       borderColor: COLORS.GRAY2,
       borderRadius: 5, borderWidth: 1,
-      height: hp(7),
+      height: hp(7.5),
       position: 'relative'
    },
 })

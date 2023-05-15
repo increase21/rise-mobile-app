@@ -20,12 +20,12 @@ const { wp, hp } = useDimension()
 export default ({ navigation, route }: PlanScreenProps<PLANSCREEN.PLAN_OVERVIEW>) => {
    let param: any = route.params
 
-   const { isLoading, data, refetch, error } = PlanMethods.getPlan("plan-overview", true, param?.id)
+   const { isLoading, data, refetch, error } = PlanMethods.getPlan(`"plan-overview"${param?.id}`, true, param?.id)
 
    let createdOn = data ? new Date(data?.data?.created_at) : new Date()
    let matureOn = data ? new Date(data?.data?.maturity_date) : new Date()
 
-   if (isLoading) {
+   if ((!error && !data) || isLoading) {
       return <AppIndicatorLoader />
    }
 
@@ -48,7 +48,7 @@ export default ({ navigation, route }: PlanScreenProps<PLANSCREEN.PLAN_OVERVIEW>
          </ImageBackground>
          <AppLayout safeAreaView={false} style={{ height: hp(75) }} >
             <ScrollView showsVerticalScrollIndicator={false}>
-               <OverviewPlanBalance data={data.data} />
+               <OverviewPlanBalance data={data.data} navigation={navigation} />
                <AppSizeBox marginBottom={hp(.4)} />
                <PlanOverViewGraph data={data.data} />
                <AppSizeBox marginBottom={hp(.4)} />

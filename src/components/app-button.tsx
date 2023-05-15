@@ -1,14 +1,13 @@
 import React from "react";
-import { ActivityIndicator, ButtonProps, Pressable, StyleSheet, TextProps, ViewProps } from "react-native";
+import { ActivityIndicator, ButtonProps, ColorValue, Pressable, StyleSheet, TextProps, ViewProps } from "react-native";
 import { COLORS } from "../constants/app-colors";
 import appDimension from '../helpers/app-dimension'
 const { wp, hp } = appDimension()
 
 interface AppButtonProps extends ViewProps {
-   title?: string | any;
    disabled?: boolean;
    backgroundColor?: any;
-   isLoading?: Boolean | any;
+   isLoading?: boolean | any;
    onPress?: () => void;
 }
 
@@ -27,8 +26,8 @@ const AppButton = (props: AppButtonProps) => (
 
 const dStyle = StyleSheet.create({
    btnStyl: {
-      backgroundColor: COLORS.primary,
-      width: '100%', height: hp(6.5),
+      backgroundColor: COLORS.PRIMARY,
+      width: '100%', height: hp(7.5),
       borderRadius: 5,
       flexDirection: 'row',
       justifyContent: 'center',

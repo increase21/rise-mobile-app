@@ -1,11 +1,11 @@
 
-export interface createPlanProps {
+export type createPlanProps = {
    plan_name: string;
    amount: number;
    createdAt: string
 }
 
-export interface PlanProjectionProps {
+export type PlanProjectionProps = {
    amount: string;
    createdAt: number;
 }

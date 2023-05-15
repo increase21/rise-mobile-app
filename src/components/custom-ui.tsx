@@ -7,12 +7,12 @@ import { COLORS } from "../constants/app-colors";
 const { wp, hp } = appDimension()
 
 interface GrayCircleProps {
-   backgroundColor?: any;
+   backgroundColor?: string;
    width?: number;
    height?: number;
    isButton?: boolean;
    style?: ViewStyle;
-   children?: any;
+   children?: React.ReactNode;
    onPress?: (value?: any) => void;
 }
 
@@ -20,7 +20,7 @@ const dStyle = StyleSheet.create({
    vStyl: {
       backgroundColor: 'rgba(113, 135, 156, 0.1)',
       borderRadius: 50,
-      width: wp(10), height: hp(4.5),
+      width: wp(10), height: hp(5),
       flexDirection: 'row',
       overflow: 'hidden',
       justifyContent: 'center',
@@ -74,14 +74,14 @@ interface AppKeyBoardProps extends ViewProps {
 const KeyboardRow = (props = { title1: '', title2: '', title3: '', onPress: (value?: any) => { } }) => (
    <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginBottom: 24 }}>
       <AppCircle isButton width={wp(15)} height={hp(7.5)} onPress={() => props?.onPress(props?.title1)}>
-         <AppText color={COLORS.primary} semiBold fontSize={wp(1.5)}>{props?.title1}</AppText>
+         <AppText color={COLORS.PRIMARY} semiBold fontSize={6}>{props?.title1}</AppText>
       </AppCircle>
       <AppCircle isButton width={wp(15)} height={hp(7.5)} onPress={() => props?.onPress(props?.title2)}>
-         <AppText color={COLORS.primary} semiBold fontSize={wp(1.5)}>{props?.title2}</AppText>
+         <AppText color={COLORS.PRIMARY} semiBold fontSize={6}>{props?.title2}</AppText>
       </AppCircle>
       <AppCircle isButton width={wp(15)} height={hp(7.5)} onPress={() => props?.onPress(props?.title3)}>
-         {props?.title3 === "x" ? <KeyboardDelete /> :
-            <AppText color={COLORS.primary} semiBold fontSize={wp(1.5)}>{props?.title3}</AppText>}
+         {props?.title3 === "x" ? <KeyboardDelete width={30} height={17} /> :
+            <AppText color={COLORS.PRIMARY} semiBold fontSize={6}>{props?.title3}</AppText>}
       </AppCircle>
    </View>
 )
@@ -100,6 +100,6 @@ export const AppIndicatorLoader = (props: { style?: ViewStyle, loaderColor?: str
       flexDirection: 'row', justifyContent: 'center', flex: 1,
       backgroundColor: COLORS.WHITE, alignItems: 'center',
    }, props.style]}>
-      <ActivityIndicator size="large" color={props.loaderColor || COLORS.primary} />
+      <ActivityIndicator size="large" color={props.loaderColor || COLORS.PRIMARY} />
    </View>
 )

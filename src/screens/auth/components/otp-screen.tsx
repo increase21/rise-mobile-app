@@ -14,7 +14,6 @@ const { wp, hp } = useDimension()
 const CELL_COUNT = 6;
 
 interface OTPProps {
-   // onChange?: (value?: any) => void
    value?: string
 }
 
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
    },
    focusCell: {
-      borderColor: COLORS.primary,
+      borderColor: COLORS.PRIMARY,
    },
 });
 

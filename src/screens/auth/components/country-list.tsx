@@ -7,7 +7,7 @@ const { hp } = useDimension()
 
 interface CountryListProps {
    onSubmit: (value?: string) => void;
-   showList?: Boolean | any;
+   showList: boolean;
    onClose: () => void
 }
 

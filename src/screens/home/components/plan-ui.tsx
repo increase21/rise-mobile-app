@@ -21,18 +21,23 @@ interface CreatedPlanProps {
    assetType: string,
    imageSrc: React.ReactNode;
    navigation: any;
-   dataID: any
+   dataID: string
+}
+
+type PlanDataObject = {
+   items: [],
+   item_count: 0
 }
 
 interface PlanUIProps {
-   data: { items: [], item_count: 0 };
+   data: PlanDataObject;
    isLoading: boolean;
    navigation: any;
 }
 
 const CreatePlan = ({ navigation }: ComponentNavigation) => (
    <AppCard style={dStyle.slide1} backgroundColor={COLORS.GRAY2} alignItems="center">
-      <AppCircle width={wp(12.2)} height={hp(5.6)} isButton
+      <AppCircle width={wp(12.2)} height={hp(6)} isButton
          onPress={() => helpers.navigateToScreen(navigation, HOMESCREEN.PLAN_SCREEN, { screen: PLANSCREEN.CREATE_PLAN })}
          style={{ backgroundColor: 'rgba(64, 187, 195, 0.15)', marginBottom: hp(1) }}>
          <PlusIcon fill="transparent" strokeWidth={2} />
@@ -54,33 +59,33 @@ const CreatedPlan = (props: CreatedPlanProps) => (
    </TouchableOpacity>
 )
 
-export const PlanUI = (props: PlanUIProps) => (
+export const PlanUI = ({ data, navigation, isLoading }: PlanUIProps) => (
    <View>
       <View style={FR_JSB}>
-         <AppText fontFamily="Tomato" fontSize={wp(1.1)} >{props?.data?.item_count > 0 ? 'Your Plans' : 'Create a plan'}</AppText>
-         <TouchableOpacity style={FR_AC_JSB} onPress={() => helpers.navigateToScreen(props.navigation, HOMESCREEN.PLAN_SCREEN)}>
-            <AppText color={props?.data?.item_count > 0 ? COLORS.primary : COLORS.GRAY2}
+         <AppText fontFamily="Tomato" fontSize={4.5} semiBold>{data?.item_count > 0 ? 'Your Plans' : 'Create a plan'}</AppText>
+         <TouchableOpacity style={FR_AC_JSB} onPress={() => helpers.navigateToScreen(navigation, HOMESCREEN.PLAN_SCREEN)}>
+            <AppText color={data?.item_count > 0 ? COLORS.PRIMARY : COLORS.GRAY3}
                style={{ marginRight: wp(1) }} fontFamily="DMSans" fontSize={3.2} bold>View all plans</AppText>
-            <ArrowCurve stroke={props?.data?.item_count > 0 ? undefined : COLORS.GRAY2} width={wp(2.7)}
+            <ArrowCurve stroke={data?.item_count > 0 ? undefined : COLORS.GRAY2} width={wp(2.7)}
                style={{ transform: [{ rotate: '-90deg' }] }} />
          </TouchableOpacity>
       </View>
       <AppSizeBox marginTop={hp(.2)} />
-      {!(props?.data?.item_count || props?.data?.item_count === 0) &&
+      {(!data?.item_count || data?.item_count === 0) &&
          <>
-            <AppSizeBox marginTop={hp(.2)} />
             <AppText>Start your investment journey by creating a plan</AppText>
+            <AppSizeBox marginTop={hp(.4)} />
          </>
       }
       <View style={{ position: 'relative', height: hp(30) }}>
          <ScrollView decelerationRate="fast" pagingEnabled snapToInterval={wp(50)}
             snapToAlignment="start" showsHorizontalScrollIndicator={false}
             horizontal bounces={false} scrollEventThrottle={10}>
-            <CreatePlan navigation={props.navigation} />
-            {props?.data?.items?.length > 0 && props?.data?.items?.map((item: any, index: number) => (
+            <CreatePlan navigation={navigation} />
+            {data?.items?.length > 0 && data?.items?.map((item: any, index: number) => (
                <CreatedPlan title={item.plan_name} amount={item?.target_amount} key={index}
                   imageSrc={(index % 2 === 0) ? <HomePlanImg1 height={"100%"} /> : <HomePlanImg2 height={"100%"} />}
-                  assetType="Mixed assets" dataID={item?.id} navigation={props?.navigation} />
+                  assetType="Mixed assets" dataID={item?.id} navigation={navigation} />
             ))}
          </ScrollView>
       </View>
@@ -96,7 +101,7 @@ export const PlanHelp = () => (
          </AppCircle>
          <AppText style={{ marginLeft: wp(3) }}>Need Help</AppText>
       </View>
-      <AppButton style={{ width: wp(35) }}>
+      <AppButton style={{ width: wp(30), height: hp(6) }}>
          <AppText color={COLORS.WHITE}>Contact us</AppText>
       </AppButton>
    </AppCard>
@@ -136,6 +141,6 @@ const dStyle = StyleSheet.create({
       shadowColor: 'rgba(53, 71, 89, 0.15)',
       shadowOffset: { height: 1, width: 1 },
       shadowOpacity: 1, elevation: 1, borderWidth: 1,
-      shadowRadius: 6, borderColor: 'rgba(53, 71, 89, 0.1)'
+      shadowRadius: 6, borderColor: 'rgba(53, 71, 89, 0.05)'
    }
 })

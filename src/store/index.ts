@@ -1,3 +1,3 @@
-export let globalData = {
+export const globalData = {
    userData: {}
 }

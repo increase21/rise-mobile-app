@@ -3,7 +3,7 @@ import SuccessPage from "../../components/success-page";
 import { HometabScreenProps } from "../../typings/navigations";
 import { HOMESCREEN } from "../../constants/screens";
 import helpers from "../../helpers";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { AppCircle, AppLayout } from "../../components/custom-ui";
 import { AppText } from "../../components/app-text";
 import { COLORS } from "../../constants/app-colors";
@@ -11,7 +11,7 @@ import useDimension from "../../helpers/app-dimension";
 import AppHeader from "../../components/app-header";
 import AppCard, { AppSizeBox } from "../../components/app-card";
 import { FR_AC, FR_AC_JSB, FR_JC_AC, FR_JSB } from "../../constants/global-style";
-import { screenData } from "./mockData";
+import { ScreenData } from "./mockData";
 import Modal from 'react-native-modal'
 import { XIcon } from "../../assets/svg";
 import AppButton from "../../components/app-button";
@@ -21,7 +21,7 @@ const { wp, hp, width } = useDimension()
 
 
 interface PlanInfoRowProps {
-   data?: any,
+   data: any;
    Img: any
 }
 
@@ -38,7 +38,7 @@ const PlanInfoRow = ({ data, Img }: PlanInfoRowProps) => (
             </AppText>
          </View>
       </View>
-      <View style={{}}>
+      <View>
          <AppText >Rate - {data?.rate}</AppText>
          <AppText color={COLORS.GRAY1} fontSize={wp(.9)}>
             Fee - {data?.fee}
@@ -59,9 +59,10 @@ export default ({ navigation, route }: HometabScreenProps<HOMESCREEN.FEED_SCREEN
    return (
       <React.Fragment>
          <AppLayout>
+            <StatusBar backgroundColor={COLORS.WHITE} translucent={false} barStyle="dark-content" />
             <AppHeader title="Fund Wallet" backIcon="close" />
             <AppSizeBox marginTop={hp(.2)} />
-            <AppCard backgroundColor={COLORS.primary} paddingVertical={hp(1)}
+            <AppCard backgroundColor={COLORS.PRIMARY} paddingVertical={hp(1)}
                justifyContent="center" alignItems="center">
                <AppText bold color={COLORS.WHITE}>Balance</AppText>
                <AppSizeBox marginTop={hp(.2)} />
@@ -72,7 +73,7 @@ export default ({ navigation, route }: HometabScreenProps<HOMESCREEN.FEED_SCREEN
                <AppText>Transactions</AppText>
                <ScrollView showsVerticalScrollIndicator={false}>
                   <AppSizeBox marginTop={hp(.2)} />
-                  {screenData.map((item, index) => <PlanInfoRow data={item} Img={item.img} key={index} />)}
+                  {ScreenData.map((item, index) => <PlanInfoRow data={item} Img={item.img} key={index} />)}
                </ScrollView>
             </View>
          </AppLayout>

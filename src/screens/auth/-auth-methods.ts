@@ -98,7 +98,6 @@ class authMethods {
    }
 
    loginAccount(navigation?: any) {
-      // const { setUserData } = useStore(state => state)
       const processReqest = (data: loginAccountProps,) => {
          //if there's no email
          if (!data.email) {
@@ -153,7 +152,7 @@ class authMethods {
             let getToken = await helpers.localStorageGet('_userdata')
             //if not exist
             if (!getToken || !getToken.email_address) {
-               helpers.navigateToScreen(navigation, AUTHSCREENS.SIGN_UP_STORY)
+               helpers.resetNavigation(navigation, AUTHSCREENS.SIGN_UP_STORY)
                return {}
             }
             helpers.setGlobalUserData(getToken)
@@ -162,10 +161,10 @@ class authMethods {
             //if the token is not valid
             if (confirmToken && confirmToken.data && confirmToken.data.email_address) {
                helpers.setGlobalUserData({ ...getToken, ...confirmToken.data })
-               helpers.navigateToScreen(navigation, ROOTSCREEN.HOME_SCREEN)
+               helpers.resetNavigation(navigation, ROOTSCREEN.HOME_SCREEN)
                return {}
             }
-            helpers.navigateToScreen(navigation, AUTHSCREENS.SIGN_IN)
+            helpers.resetNavigation(navigation, AUTHSCREENS.SIGN_IN)
             return {}
          }, { retry: false })
       return { isLoading, refetch, data, error }

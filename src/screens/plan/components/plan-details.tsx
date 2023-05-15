@@ -9,13 +9,24 @@ import { COLORS } from "../../../constants/app-colors";
 import AppCard, { AppSizeBox } from "../../../components/app-card";
 import AppProgressBar from "../../../components/app-progress-bar";
 import AppButton from "../../../components/app-button";
+import { HOMESCREEN } from "../../../constants/screens";
+import helpers from "../../../helpers";
 const { wp, hp } = useDimension()
 
-interface PlanBalanceProps {
-   data: any
+export type DataPropsObject = {
+   invested_amount: number;
+   target_amount: number;
+   total_returns: string;
+   total_invested: string;
+   maturity_date: string;
 }
 
-export const OverviewPlanBalance = ({ data }: PlanBalanceProps) => {
+interface PlanBalanceProps {
+   data: DataPropsObject;
+   navigation: any
+}
+
+export const OverviewPlanBalance = ({ data, navigation }: PlanBalanceProps) => {
    let proNum = ((data.invested_amount / data.target_amount) * 100).toFixed(2)
    return (
       <View style={AC_JC}>
@@ -36,7 +47,7 @@ export const OverviewPlanBalance = ({ data }: PlanBalanceProps) => {
          <AppSizeBox marginTop={hp(.15)} />
          <View style={[FR_AC_JSB, { width: '100%' }]}>
             <AppText>{proNum} achieved</AppText>
-            <AppText>Target: ${parseFloat(data.target_amount).toLocaleString()}</AppText>
+            <AppText>Target: ${parseFloat(String(data.target_amount)).toLocaleString()}</AppText>
          </View>
          <AppSizeBox marginTop={hp(.15)} />
          <AppProgressBar progress={parseInt(proNum)} />
@@ -47,9 +58,9 @@ export const OverviewPlanBalance = ({ data }: PlanBalanceProps) => {
             <AppText textAlign="center" color={COLORS.GRAY1}>Results are updated monthly</AppText>
          </AppCard>
          <AppSizeBox marginTop={hp(.4)} />
-         <AppButton backgroundColor={'rgba(113, 135, 156, 0.1)'}>
-            <PlusIcon fill="transparent" stroke={COLORS.primary} strokeWidth={2} />
-            <AppText bold color={COLORS.primary} style={{ marginLeft: 6 }}>Fund plan</AppText>
+         <AppButton backgroundColor={'rgba(113, 135, 156, 0.1)'} onPress={() => helpers.navigateToScreen(navigation, HOMESCREEN.WALLET_SCREEN, { fundPlan: true })}>
+            <PlusIcon fill="transparent" stroke={COLORS.PRIMARY} strokeWidth={2} />
+            <AppText bold color={COLORS.PRIMARY} style={{ marginLeft: 6 }}>Fund plan</AppText>
          </AppButton>
       </View>
    )

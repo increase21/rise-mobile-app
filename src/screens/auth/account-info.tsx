@@ -37,10 +37,10 @@ export default ({ navigation }: AuthScreenProps<AUTHSCREENS.CRAETE_ACCOUNT>) => 
 
    return (
       <AppLayout style={{ backgroundColor: COLORS.WHITE, height: '100%' }}>
-         <StatusBar barStyle="dark-content" backgroundColor={COLORS.WHITE} />
+         <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
          <ScrollView>
             <View style={{ marginTop: wp(25), }}>
-               <AppText fontSize={5}>Tell us about you</AppText>
+               <AppText fontSize={6} semiBold>Tell us about you</AppText>
                <AppText style={{ color: COLORS.GRAY1, marginTop: 11 }}>Please use your name as it appears on your ID.</AppText>
                <AppInput ref={fnameRef} textContentType="givenName"
                   returnKeyType="next" label="Legal First Name*"
@@ -63,7 +63,8 @@ export default ({ navigation }: AuthScreenProps<AUTHSCREENS.CRAETE_ACCOUNT>) => 
                      <AppText fontWeight="700">{regData.selectedCountry}</AppText>
                      <ArrowCurve style={{ marginLeft: 14 }} />
                   </TouchableOpacity>
-                  <TextInput placeholder="Phone number" maxLength={13} textContentType="telephoneNumber" keyboardType="name-phone-pad"
+                  <TextInput placeholder="Phone number" maxLength={13} textContentType="telephoneNumber"
+                     keyboardType="phone-pad"
                      onChangeText={txt => setRegData({ ...regData, phoneNumber: txt })}
                      style={dStyle.phoneComplete} ref={phoneInputRef} />
                </AppCustomInput>
@@ -87,12 +88,12 @@ export default ({ navigation }: AuthScreenProps<AUTHSCREENS.CRAETE_ACCOUNT>) => 
                </AppButton>
 
                <View style={{ marginTop: hp(4), width: '80%', marginLeft: 'auto', marginRight: 'auto' }}>
-                  <AppText color={COLORS.BLACK1} textAlign="center">By clicking Continue, you agree to our <AppText color={COLORS.primary}>Terms of Service</AppText> and <AppText color={COLORS.primary}>Privacy Policy</AppText>.</AppText>
+                  <AppText color={COLORS.BLACK1} textAlign="center">By clicking Continue, you agree to our <AppText color={COLORS.PRIMARY}>Terms of Service</AppText> and <AppText color={COLORS.PRIMARY}>Privacy Policy</AppText>.</AppText>
                </View>
             </View>
          </ScrollView>
          <Modal isVisible={openModal} backdropOpacity={0.2} style={{ justifyContent: 'flex-end' }}>
-            <CalendarUI minDate={aMinDate} startDate={aMinDate} numberOfYearsToRun={100} onSubmit={(date?: any) => {
+            <CalendarUI maxDate={aMinDate} startDate={aMinDate} numberOfYearsToRun={-100} onSubmit={(date?: any) => {
                setRegData({ ...regData, dob: date })
                setOpenModal(false)
             }} onClose={() => setOpenModal(false)} />

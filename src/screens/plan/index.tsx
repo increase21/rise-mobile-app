@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ScrollView, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
 import { AppText } from "../../components/app-text";
 import { AppCircle, AppIndicatorLoader, AppLayout } from "../../components/custom-ui";
 import AppHeader from "../../components/app-header";
@@ -7,7 +7,6 @@ import AppCard, { AppSizeBox } from "../../components/app-card";
 import { COLORS } from "../../constants/app-colors";
 import useDimension from "../../helpers/app-dimension";
 import { HomePlanImg1, HomePlanImg3, LeftArrow, PlusIcon, QuestionMark } from "../../assets/svg";
-import AppButton from "../../components/app-button";
 import { PlanScreenProps } from "../../typings/navigations";
 import { HOMESCREEN, PLANSCREEN, ROOTSCREEN } from "../../constants/screens";
 import { ComponentNavigation } from "../../typings/components";
@@ -15,6 +14,16 @@ import SuccessPage from "../../components/success-page";
 import helpers from "../../helpers";
 import PlanMethods from "./-plan-methods";
 const { hp, wp } = useDimension()
+
+
+interface CreatedPlanProps {
+   imageSrc: React.ReactNode,
+   title: string;
+   amount: string;
+   assetType: string;
+   id: string;
+   navigation: any;
+}
 
 const NoCreatedPlan = ({ navigation }: ComponentNavigation) => (
    <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -26,8 +35,9 @@ const NoCreatedPlan = ({ navigation }: ComponentNavigation) => (
    </View>
 )
 
-const CreatedPlan = (props: { imageSrc: React.ReactNode, title: string, amount: string, assetType: string, id: string, navigation: any }) => (
-   <TouchableOpacity style={dStyle.activePlan} onPress={() => helpers.navigateToScreen(props.navigation, PLANSCREEN.PLAN_OVERVIEW, { id: props.id })}>
+const CreatedPlan = (props: CreatedPlanProps) => (
+   <TouchableOpacity style={dStyle.activePlan}
+      onPress={() => helpers.navigateToScreen(props.navigation, PLANSCREEN.PLAN_OVERVIEW, { id: props.id })}>
       {props.imageSrc}
       <View style={dStyle.actPlanContnt}>
          <AppText color={COLORS.WHITE}>{props.title}</AppText>
@@ -46,7 +56,7 @@ export default ({ navigation }: PlanScreenProps<PLANSCREEN.INDEX_SCREEN>) => {
    if (isLoading) {
       return <AppIndicatorLoader />
    }
-   console.log("index mounted")
+
    if (error) {
       return <SuccessPage status="error" btnTitle="Reload"
          comment="Could not get plan details"
@@ -55,6 +65,7 @@ export default ({ navigation }: PlanScreenProps<PLANSCREEN.INDEX_SCREEN>) => {
    }
    return (
       <AppLayout>
+         <StatusBar backgroundColor={COLORS.WHITE} translucent={false} barStyle="light-content" />
          <AppHeader backIcon="close" title="Plan" />
          <AppSizeBox marginTop={hp(.2)} />
          <AppText textAlign="center" color={COLORS.GRAY1}>Tap on any of the plans to select</AppText>

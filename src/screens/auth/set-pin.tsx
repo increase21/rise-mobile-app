@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StatusBar } from "react-native";
+import { SafeAreaView, ScrollView, StatusBar } from "react-native";
 import { COLORS } from "../../constants/app-colors";
 import AppHeader from "../../components/app-header";
 import { AppKeyBoard, AppLayout } from "../../components/custom-ui";
@@ -11,28 +11,34 @@ import helpers from "../../helpers";
 import { AUTHSCREENS, ROOTSCREEN } from "../../constants/screens";
 import SuccessPage from "../../components/success-page";
 import { AuthScreenProps } from "../../typings/navigations";
+import { AppSizeBox } from "../../components/app-card";
 const { hp } = useDimension()
 
 export default ({ navigation }: AuthScreenProps<AUTHSCREENS.SET_PIN_CONFIRM>) => {
-   const [value, setValue] = React.useState<string>('');
+   const [value, setValue] = React.useState('');
    const [success, setSuccess] = React.useState(false)
+
    return (
       <React.Fragment>
          <AppLayout>
-            <StatusBar barStyle="dark-content" backgroundColor={COLORS.WHITE} />
-            <AppHeader title="Set Pin" />
-            <AppText fontSize={4.3} style={{ marginTop: 20 }}>Create a 6-digit PIN</AppText>
-            <AppText color={COLORS.GRAY1} style={{ marginTop: 8 }}>You’ll use this PIN to sign in and confirm transactions</AppText>
-            <OtpScreen value={value} />
-            <AppKeyBoard onPress={(res?: any) => {
-               setValue(res === "x" ? value.slice(0, -1) : value.length < 6 ? value + res : value)
-               //if the leng is more than 6
-               if (value.length === 5) {
-                  setSuccess(true)
-                  // helpers.resetNavigation(navigation, ROOTSCREEN.HOME_SCREEN)
-               }
-            }}
-               style={{ marginTop: hp(10) }} />
+            <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+            <AppSizeBox marginTop={hp(.6)} />
+            <ScrollView showsVerticalScrollIndicator={false}>
+               <AppHeader />
+               <AppSizeBox marginTop={hp(.3)} />
+               <AppText fontSize={6} semiBold>Create a 6-digit PIN</AppText>
+               <AppText fontSize={4} color={COLORS.GRAY1} style={{ marginTop: 8 }}>You’ll use this PIN to sign in and confirm transactions</AppText>
+               <OtpScreen value={value} />
+               <AppKeyBoard onPress={(res?: string) => {
+                  setValue(res === "x" ? value.slice(0, -1) : value.length < 6 ? value + res : value)
+                  //if the leng is more than 6
+                  if (value.length === 5) {
+                     setSuccess(true)
+                     // helpers.resetNavigation(navigation, ROOTSCREEN.HOME_SCREEN)
+                  }
+               }}
+                  style={{ marginTop: hp(10) }} />
+            </ScrollView>
          </AppLayout>
          {success && <SuccessPage title={"You’ve created your PIN"}
             onPress={() => helpers.resetNavigation(navigation, ROOTSCREEN.HOME_SCREEN)}

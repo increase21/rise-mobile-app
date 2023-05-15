@@ -1,5 +1,5 @@
 export enum COLORS {
-   primary = '#0898A0',
+   PRIMARY = '#0898A0',
    WHITE = '#FFF',
    GRAY1 = '#71879C',
    GRAY2 = '#E1E8ED',

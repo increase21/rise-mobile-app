@@ -15,22 +15,19 @@ import { PlanScreenProps } from "../../typings/navigations";
 import { PLANSCREEN } from "../../constants/screens";
 import PlanMethods from "./-plan-methods";
 import helpers from "../../helpers";
-import { useStore } from "../../store";
+import { globalData } from "../../store";
 const { hp, wp } = useDimension()
 
 export default ({ navigation, route }: PlanScreenProps<PLANSCREEN.REVIEW_PLAN>) => {
    const [planState, setPlanState] = React.useState({ showSuccess: false, showError: false })
    //the user store
-   const userData = useStore(store => store).userData
+   const userData: any = globalData.userData
    //data to send to API
    let planData: any = route.params
    //get plan projection
    const { isLoading, data, error, refetch } = PlanMethods.getPlanProjection(planData)
    //create a plan
-   const { processReqest: createPlanNow, isLoading: createPlanLoader } = PlanMethods.createPlan(setPlanState)
-
-   console.log("Is loading", createPlanLoader, isLoading)
-   // console.log(createdPlanData,createPlanLoader, "created data", planData)
+   const { processReqest: createPlanNow, data: createdPlanData, isLoading: createPlanLoader } = PlanMethods.createPlan(setPlanState)
 
    if (isLoading) {
       return <AppIndicatorLoader />
@@ -56,29 +53,25 @@ export default ({ navigation, route }: PlanScreenProps<PLANSCREEN.REVIEW_PLAN>) 
                      <InfoIcon />
                      <AppText style={{ flex: 1, marginLeft: wp(6) }}>Returns not guaranteed. Investing involves risk. Read our Disclosures.</AppText>
                   </AppCard>
-                  <AppSizeBox marginVertical={hp(.2)} />
+                  <AppSizeBox marginVertical={hp(.4)} />
                   <AppText color={COLORS.GRAY1} textAlign="center">These are your starting settings, they can always be updated.</AppText>
-                  <AppSizeBox marginVertical={hp(.2)} />
+                  <AppSizeBox marginVertical={hp(.4)} />
                   <AppButton isLoading={createPlanLoader} onPress={() => createPlanNow(planData)}>
                      <AppText bold color={COLORS.WHITE}>Agree & Continue</AppText>
                   </AppButton>
                   <AppButton onPress={() => helpers.resetNavigation(navigation, PLANSCREEN.CREATE_PLAN2)}
                      style={{ marginTop: 10, backgroundColor: COLORS.GRAY4 }}>
-                     <AppText bold color={COLORS.primary}>Start Over</AppText>
+                     <AppText bold color={COLORS.PRIMARY}>Start Over</AppText>
                   </AppButton>
+                  <AppSizeBox marginVertical={hp(.3)} />
                </View>
             </ScrollView>
          </AppLayout >
          {planState.showSuccess &&
             <SuccessPage btnTitle="View Plan"
                comment={`Well Done, ${userData?.first_name}`}
-               onPress={() => helpers.navigateToScreen(navigation, PLANSCREEN.PLAN_OVERVIEW, {
-                  "created_at": "2023-05-14T19:04:23.448Z",
-                  "id": "3df9a943-c99c-4ad8-9cb9-d4b91ca20221",
-                  "invested_amount": 0, "maturity_date": "2024-05-31T00:00:00.000Z",
-                  "plan_name": "Wife material", "returns": [], "target_amount": 10.65,
-                  "total_returns": 0, "user_id": "e1b8665f-c2c5-41de-9d9b-186f13db049b"
-               })} title={`You just created\nyour plan`} />
+               onPress={() => helpers.navigateToScreen(navigation, PLANSCREEN.PLAN_OVERVIEW, createdPlanData?.data)}
+               title={`You just created\nyour plan`} />
          }
       </React.Fragment>
    )

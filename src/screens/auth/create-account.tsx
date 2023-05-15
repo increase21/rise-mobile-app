@@ -26,19 +26,19 @@ interface XterIndicator {
 const XterIndicator = (props?: XterIndicator) => (
    <View>
       <View style={dStyles.xRow}>
-         <View style={[dStyles.xRowChild, props?.hasMinimum && { backgroundColor: COLORS.primary }]}>
+         <View style={[dStyles.xRowChild, props?.hasMinimum && { backgroundColor: COLORS.PRIMARY }]}>
             {props?.hasMinimum && <TickRight width={9} stroke={COLORS.WHITE} />}
          </View>
          <AppText>Minimum of 8 characters</AppText>
       </View>
       <View style={dStyles.xRow}>
-         <View style={[dStyles.xRowChild, { marginVertical: 15 }, props?.hasUpper && { backgroundColor: COLORS.primary }]}>
+         <View style={[dStyles.xRowChild, { marginVertical: 15 }, props?.hasUpper && { backgroundColor: COLORS.PRIMARY }]}>
             {props?.hasUpper && <TickRight width={9} stroke={COLORS.WHITE} />}
          </View>
          <AppText>One UPPERCASE character</AppText>
       </View>
       <View style={dStyles.xRow}>
-         <View style={[dStyles.xRowChild, props?.hasSpecialXter && { backgroundColor: COLORS.primary }]}>
+         <View style={[dStyles.xRowChild, props?.hasSpecialXter && { backgroundColor: COLORS.PRIMARY }]}>
             {props?.hasSpecialXter && <TickRight width={9} stroke={COLORS.WHITE} />}
          </View>
          <AppText>One unique character (e.g: !@#$%^&*?)</AppText>
@@ -72,9 +72,9 @@ export default ({ navigation, route }: AuthScreenProps<AUTHSCREENS.CRAETE_ACCOUN
    return (
       <React.Fragment>
          <AppLayout style={{ backgroundColor: COLORS.WHITE, height: '100%' }}>
-            <StatusBar barStyle="dark-content" backgroundColor={COLORS.WHITE} />
+            <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
             <View style={{ marginTop: wp(25), }}>
-               <AppText fontSize={5}>Create an account</AppText>
+               <AppText fontSize={6} semiBold>Create an account</AppText>
                <AppText style={{ color: COLORS.GRAY1, marginTop: 11 }}>Start building your dollar-denominated investment portfolio</AppText>
 
                <AppInput autoCorrect={false} autoComplete="email"
@@ -88,7 +88,7 @@ export default ({ navigation, route }: AuthScreenProps<AUTHSCREENS.CRAETE_ACCOUN
                      onChangeText={txt => setXterCheck({ ...xterCheck, password: txt })}
                      viewProps={{ style: { marginVertical: wp(4) } }} />
                   <TouchableOpacity onPress={() => setXterCheck({ ...xterCheck, showPass: !xterCheck.showPass })}
-                     style={{ position: 'absolute', right: 0, top: 0, marginRight: wp(3), marginTop: wp(10) }}>
+                     style={{ position: 'absolute', right: 0, top: 0, marginRight: wp(3), marginTop: wp(9.2) }}>
                      {xterCheck.showPass ? <PasswordClose /> : <PasswordOpen />}
                   </TouchableOpacity>
                </View>
@@ -122,7 +122,7 @@ const dStyles = StyleSheet.create({
    xRowChild: {
       borderRadius: 50, height: 15,
       width: 15, backgroundColor: COLORS.WHITE,
-      borderWidth: 1, borderColor: COLORS.primary,
+      borderWidth: 1, borderColor: COLORS.PRIMARY,
       marginRight: 10, justifyContent: 'center', alignItems: 'center'
    },
    xRow: {

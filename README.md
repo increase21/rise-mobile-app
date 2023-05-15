@@ -5,7 +5,7 @@
 4. Run this command to start the project for android; yarn android or npm run android
 4. Run this command to start the project for ios; yarn ios or npm run ios
 
-## Project Challenge
+## Challenges
 1. The figma prototype does not link all the pages/screens in the design. This requires more time to figure how the screens are related in the design especially Plan Module
 
 2. The postman collection for the API does not have endpoint to fund a plan or fund wallet.

@@ -41,7 +41,7 @@ const CreatedPlan = (props: CreatedPlanProps) => (
       {props.imageSrc}
       <View style={dStyle.actPlanContnt}>
          <AppText color={COLORS.WHITE}>{props.title}</AppText>
-         <AppText color={COLORS.WHITE} fontSize={wp(1.5)}>{props.amount}</AppText>
+         <AppText color={COLORS.WHITE} fontSize={6}>{props.amount}</AppText>
          <AppText color={COLORS.WHITE}>{props.assetType}</AppText>
          <View style={{ position: 'absolute', right: 0, bottom: 0, marginBottom: hp(2), marginRight: 10 }}>
             <LeftArrow stroke={COLORS.WHITE} style={{ transform: [{ rotate: '180deg' }] }} />

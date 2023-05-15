@@ -11,12 +11,10 @@ import { PlanHelp, PlanUI } from "./components/plan-ui";
 import { AppSizeBox } from "../../components/app-card";
 import { TodayQuote } from "./components/today-quote";
 import { HomeGradients } from "./components/home-gradients";
-import AppButton from "../../components/app-button";
 import { globalData } from "../../store";
 import PlanMethods from "../plan/-plan-methods";
 import { HometabScreenProps } from "../../typings/navigations";
 import { HOMESCREEN } from "../../constants/screens";
-import AuthMethods from "../auth/-auth-methods";
 
 
 
@@ -30,10 +28,10 @@ export default ({ navigation }: HometabScreenProps<HOMESCREEN.INDEX_SCREEN>) => 
 
    return (
       <React.Fragment>
-         <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
+         <StatusBar barStyle="dark-content" backgroundColor={COLORS.WHITE} translucent={true} />
          <ScrollView contentContainerStyle={{ backgroundColor: '#fcfcfc' }} showsVerticalScrollIndicator={false}>
             <HomeGradients>
-               <AppSizeBox marginTop={Platform.OS === "ios" ? 6 : 4} />
+               <AppSizeBox marginTop={6} />
                <MetaUI name={userData?.first_name} bellCount={2} dayHour={new Date().getHours()} />
                <AppSizeBox marginTop={1} />
                <BalanceUI totalBalance={userData?.total_balance} navigation={navigation} />

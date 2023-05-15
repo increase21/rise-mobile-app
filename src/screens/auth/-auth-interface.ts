@@ -1,4 +1,4 @@
-export type createAccountProps = {
+export type CreateAccountProps = {
    fName?: string;
    lName?: string;
    nickName?: string;
@@ -9,7 +9,11 @@ export type createAccountProps = {
    selectedCountry?: string
 }
 
-export type loginAccountProps = {
+export type LoginAccountProps = {
    email: string;
    password: string
+}
+
+export type ErrorObject = {
+   message: string
 }

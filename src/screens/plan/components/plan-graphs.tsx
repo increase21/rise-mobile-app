@@ -2,7 +2,7 @@ import {
    LineChart as LineChartChatKit
 } from "react-native-chart-kit";
 import useDimension from "../../../helpers/app-dimension";
-import { Dimensions, View, ViewStyle } from "react-native";
+import { Dimensions, StyleSheet, View, ViewStyle } from "react-native";
 import { AppText } from "../../../components/app-text";
 import { COLORS } from "../../../constants/app-colors";
 import { AppCircle } from "../../../components/custom-ui";
@@ -53,24 +53,24 @@ export const PlanReviewGraph = ({ data, planInfo }: PlanGraphProps) => {
    return (
       <View>
          <View style={{ alignItems: 'center' }}>
-            <AppText fontSize={wp(.7)} textTransform="capitalize" color={COLORS.GRAY1}>{planInfo?.plan_name}</AppText>
+            <AppText fontSize={3.2} textTransform="capitalize" color={COLORS.GRAY1}>{planInfo?.plan_name}</AppText>
             <AppText style={{ marginVertical: hp(1) }} bold fontFamily="Tomato"
-               fontSize={wp(1.4)} color={COLORS.BLACK1}>${parseFloat(data?.total_invested).toLocaleString()}</AppText>
-            <AppText color={COLORS.BLACK1}>{runYearData?.year}</AppText>
+               fontSize={7} color={COLORS.BLACK1}>${parseFloat(data?.total_invested).toLocaleString()}</AppText>
+            <AppText fontSize={3.7} color={COLORS.BLACK1}>{runYearData?.year}</AppText>
          </View>
          <AppSizeBox marginTop={hp(.4)} />
          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                <AppCircle backgroundColor={COLORS.GRAY3} height={hp(1)} width={wp(2)}
                   style={{ marginRight: wp(2) }} />
-               <AppText fontSize={wp(.7)}>
+               <AppText fontSize={3.3}>
                   Investments • ${parseFloat(planInfo?.amount).toLocaleString()}
                </AppText>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                <AppCircle backgroundColor={COLORS.PRIMARY} height={hp(1)}
                   width={wp(2)} style={{ marginRight: wp(2) }} />
-               <AppText fontSize={wp(.7)}>
+               <AppText fontSize={3.3}>
                   Returns • ${(parseFloat(data?.total_invested) - parseFloat(planInfo?.amount)).toLocaleString()}
                </AppText>
             </View>
@@ -161,7 +161,7 @@ export const PlanOverViewGraph = ({ data }: PlanGraphProps) => {
          <View style={{ alignItems: 'center' }}>
             <AppText color={COLORS.WHITE}>Performance</AppText>
             <AppText style={{ marginVertical: hp(.5) }} bold fontFamily="Tomato"
-               fontSize={wp(1.4)} color={COLORS.WHITE}>${totalPerd.toLocaleString()}</AppText>
+               fontSize={3} color={COLORS.WHITE}>${totalPerd.toLocaleString()}</AppText>
             <AppText color={COLORS.WHITE}>{matureDate.toDateString()}</AppText>
          </View>
          <AppSizeBox marginTop={hp(.3)} />
@@ -169,20 +169,26 @@ export const PlanOverViewGraph = ({ data }: PlanGraphProps) => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                <AppCircle backgroundColor={COLORS.WHITE} height={hp(1)} width={wp(2)}
                   style={{ marginRight: wp(2) }} />
-               <AppText fontSize={wp(.7)} color={COLORS.WHITE}>
+               <AppText fontSize={3} color={COLORS.WHITE}>
                   Investments • ${data?.invested_amount}
                </AppText>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                <AppCircle backgroundColor={'#41BCC4'} height={hp(1)}
                   width={wp(2)} style={{ marginRight: wp(2) }} />
-               <AppText fontSize={wp(.7)} color={COLORS.WHITE}>
+               <AppText fontSize={3} color={COLORS.WHITE}>
                   Returns • ${data?.total_returns}
                </AppText>
             </View>
          </View>
          <AppSizeBox marginTop={hp(.3)} />
          <PlanGraph2 labelList={[]} totalAmount={totalPerd / 1000} />
+         <View style={[FR_AC_JSB, dStyle.monHolda]}>
+            <View style={[dStyle.moneyRow, { backgroundColor: COLORS.WHITE }]}><AppText>1M</AppText></View>
+            <View style={dStyle.moneyRow}><AppText color={COLORS.WHITE} textTransform="uppercase">3m</AppText></View>
+            <View style={dStyle.moneyRow}><AppText color={COLORS.WHITE} textTransform="uppercase">6m</AppText></View>
+            <View style={dStyle.moneyRow}><AppText color={COLORS.WHITE}>All</AppText></View>
+         </View>
       </View>
    )
 }
@@ -247,8 +253,16 @@ const PlanGraph2 = ({ totalAmount, labelList }: PlanGraphChild) => (
          }
       }}
       bezier
-      style={{
-
-      }}
    />
 )
+
+const dStyle = StyleSheet.create({
+   monHolda: {
+      width: '95%', marginLeft: 'auto', marginRight: 'auto',
+      backgroundColor: 'rgba(255, 255, 255, 0.15)', borderRadius: 5
+   },
+   moneyRow: {
+      height: hp(4), width: wp(15),
+      borderRadius: 5, justifyContent: 'center', alignItems: 'center'
+   }
+})

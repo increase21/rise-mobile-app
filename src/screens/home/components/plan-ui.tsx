@@ -49,12 +49,12 @@ const CreatePlan = ({ navigation }: ComponentNavigation) => (
 const CreatedPlan = (props: CreatedPlanProps) => (
    <TouchableOpacity style={[dStyle.activePlan, { borderRadius: 10 }]}
       onPress={() => helpers.navigateToScreen(props.navigation, HOMESCREEN.PLAN_SCREEN,
-         { screen: PLANSCREEN.PLAN_OVERVIEW, params: { id: props.dataID } })}>
+         { screen: PLANSCREEN.PLAN_OVERVIEW, params: { id: props.dataID, isTarget: HOMESCREEN.INDEX_SCREEN } })}>
       {props.imageSrc}
       <View style={dStyle.actPlanContnt}>
-         <AppText color={COLORS.WHITE}>{props.title}</AppText>
-         <AppText color={COLORS.WHITE} fontSize={wp(1.5)}>{props.amount}</AppText>
-         <AppText color={COLORS.WHITE}>{props.assetType}</AppText>
+         <AppText fontSize={3.7} textTransform="capitalize" color={COLORS.WHITE}>{props.title}</AppText>
+         <AppText color={COLORS.WHITE} fontSize={6}>{props.amount}</AppText>
+         <AppText textTransform="capitalize" fontSize={3.7} color={COLORS.WHITE}>{props.assetType}</AppText>
       </View>
    </TouchableOpacity>
 )
@@ -63,7 +63,7 @@ export const PlanUI = ({ data, navigation, isLoading }: PlanUIProps) => (
    <View>
       <View style={FR_JSB}>
          <AppText fontFamily="Tomato" fontSize={4.5} semiBold>{data?.item_count > 0 ? 'Your Plans' : 'Create a plan'}</AppText>
-         <TouchableOpacity style={FR_AC_JSB} onPress={() => helpers.navigateToScreen(navigation, HOMESCREEN.PLAN_SCREEN)}>
+         <TouchableOpacity style={FR_AC_JSB} onPress={() => helpers.navigateToScreen(navigation, HOMESCREEN.PLAN_SCREEN, { screen: PLANSCREEN.INDEX_SCREEN })}>
             <AppText color={data?.item_count > 0 ? COLORS.PRIMARY : COLORS.GRAY3}
                style={{ marginRight: wp(1) }} fontFamily="DMSans" fontSize={3.2} bold>View all plans</AppText>
             <ArrowCurve stroke={data?.item_count > 0 ? undefined : COLORS.GRAY2} width={wp(2.7)}

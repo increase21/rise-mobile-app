@@ -25,7 +25,7 @@ const SuccessPage = (props: SuccessPageProps) => (
       <AppCircle width={wp(24)} height={hp(11)}>
          {props.status === "error" ? <XIcon stroke={COLORS.RED} width={wp(15)} height={hp(15)} /> : <TickRight />}
       </AppCircle>
-      <AppText fontFamily="Tomato" fontSize={wp(1.3)}
+      <AppText fontFamily="Tomato" fontSize={5}
          textAlign="center" style={{ marginTop: hp(4) }}>{props.title}</AppText>
       <AppText color={COLORS.GRAY1} textAlign="center" style={{ marginTop: 6 }}>{props.comment}</AppText>
       <View style={{ width: '100%', marginTop: hp(30) }}>

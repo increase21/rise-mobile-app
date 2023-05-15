@@ -10,7 +10,7 @@ import { AppIndicatorLoader, AppLayout } from "../../components/custom-ui";
 import { OverViewPlanMetaData, OverviewPlanBalance } from "./components/plan-details";
 import { PlanOverViewGraph, PlanReviewGraph } from "./components/plan-graphs";
 import { PlanScreenProps } from "../../typings/navigations";
-import { PLANSCREEN } from "../../constants/screens";
+import { HOMESCREEN, PLANSCREEN, ROOTSCREEN } from "../../constants/screens";
 import PlanMethods from "./-plan-methods";
 import SuccessPage from "../../components/success-page";
 import helpers from "../../helpers";
@@ -39,14 +39,21 @@ export default ({ navigation, route }: PlanScreenProps<PLANSCREEN.PLAN_OVERVIEW>
       <View>
          <StatusBar backgroundColor="transparent" translucent barStyle="light-content" />
          <ImageBackground source={PlanOverViewBg} style={{ width: '100%' }}>
-            <AppSizeBox marginTop={hp(.8)} />
+            <AppSizeBox marginTop={hp(1.3)} />
             <AppHeader appCircleStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
                title="Start a business" subTitle={`for ${data?.data?.plan_name}`}
+               onBackPress={() => {
+                  if (param.isTarget) {
+                     helpers.resetNavigation(navigation, ROOTSCREEN.HOME_SCREEN)
+                  } else {
+                     helpers.resetNavigation(navigation, PLANSCREEN.INDEX_SCREEN)
+                  }
+               }}
                viewStyle={{ paddingHorizontal: 15 }} subTitleStyle={{ color: COLORS.WHITE }}
                titleStyle={{ color: COLORS.WHITE }} backIconSvgStyle={{ stroke: COLORS.WHITE }} />
-            <AppSizeBox marginBottom={hp(.6)} />
+            <AppSizeBox marginBottom={hp(1)} />
          </ImageBackground>
-         <AppLayout safeAreaView={false} style={{ height: hp(75) }} >
+         <AppLayout safeAreaView={false} style={{ height: '80%' }} >
             <ScrollView showsVerticalScrollIndicator={false}>
                <OverviewPlanBalance data={data.data} navigation={navigation} />
                <AppSizeBox marginBottom={hp(.4)} />
@@ -58,7 +65,7 @@ export default ({ navigation, route }: PlanScreenProps<PLANSCREEN.PLAN_OVERVIEW>
                <OverViewPlanMetaData title="Balance in Naira (*₦505)" comment={"₦" + (505 * (data?.data?.invested_amount || 0)).toLocaleString()} />
                <OverViewPlanMetaData title="Plan created on" comment={createdOn.toDateString()} />
                <OverViewPlanMetaData title="Maturity date" comment={matureOn.toDateString()} />
-               <AppSizeBox marginBottom={hp(.4)} />
+               <AppSizeBox marginBottom={hp(.8)} />
             </ScrollView>
          </AppLayout>
       </View>

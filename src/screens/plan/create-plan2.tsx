@@ -63,7 +63,7 @@ export default ({ navigation }: PlanScreenProps<PLANSCREEN.CREATE_PLAN2>) => {
                <AppProgressBar progress={planState.stage * 34} />
             </View>
             <AppSizeBox marginTop={hp(1)} />
-            <AppText fontSize={wp(1)} bold>{runPageContent(planState.stage).contentTitle}</AppText>
+            <AppText fontSize={4.3} bold>{runPageContent(planState.stage).contentTitle}</AppText>
             <AppSizeBox marginTop={hp(.2)} />
             <AppCustomInput keepOnFocus={planState.focusActive} viewProps={{ style: dStyle.inputHolda }}>
                {planState.stage == 2 && <AppText bold style={{ marginRight: wp(2) }}>{'₦'}</AppText>}

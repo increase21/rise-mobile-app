@@ -31,7 +31,7 @@ export const OverviewPlanBalance = ({ data, navigation }: PlanBalanceProps) => {
    return (
       <View style={AC_JC}>
          <AppText>Plan Balance</AppText>
-         <AppText bold fontFamily="Tomato" fontSize={wp(1.6)}>${data.invested_amount}</AppText>
+         <AppText bold fontFamily="Tomato" fontSize={7}>${data.invested_amount}</AppText>
          <View style={FR_JC_AC}>
             <AppText color={COLORS.GRAY1}>~{'₦' + data.total_returns}</AppText>
             <AppCircle height={10} width={10} backgroundColor={COLORS.GRAY1} style={{ marginLeft: 4 }}>

@@ -13,7 +13,7 @@ import AppCard, { AppSizeBox } from "../../components/app-card";
 import { FR_AC, FR_AC_JSB, FR_JC_AC, FR_JSB } from "../../constants/global-style";
 import { ScreenData } from "./mockData";
 import Modal from 'react-native-modal'
-import { XIcon } from "../../assets/svg";
+import { PlusIcon, XIcon } from "../../assets/svg";
 import AppButton from "../../components/app-button";
 import { useIsFocused } from "@react-navigation/core";
 const { wp, hp, width } = useDimension()
@@ -33,14 +33,14 @@ const PlanInfoRow = ({ data, Img }: PlanInfoRowProps) => (
          </AppCircle>
          <View>
             <AppText>{data?.title}</AppText>
-            <AppText color={COLORS.GRAY1} fontSize={wp(.9)}>
+            <AppText color={COLORS.GRAY1} fontSize={3.4} style={{ marginTop: 4 }}>
                {data?.description}
             </AppText>
          </View>
       </View>
       <View>
          <AppText >Rate - {data?.rate}</AppText>
-         <AppText color={COLORS.GRAY1} fontSize={wp(.9)}>
+         <AppText color={COLORS.GRAY1} fontSize={3.4} style={{ marginTop: 4 }}>
             Fee - {data?.fee}
          </AppText>
       </View>
@@ -49,26 +49,24 @@ const PlanInfoRow = ({ data, Img }: PlanInfoRowProps) => (
 
 export default ({ navigation, route }: HometabScreenProps<HOMESCREEN.FEED_SCREEN>) => {
    const [wState, setWState] = React.useState({ openModal: false })
-   let param: any = route.params
-   let mounted = useIsFocused()
-   React.useEffect(() => {
-      if (param?.fundPlan === true) {
-         setWState({ ...wState, openModal: true })
-      }
-   }, [mounted])
    return (
       <React.Fragment>
          <AppLayout>
             <StatusBar backgroundColor={COLORS.WHITE} translucent={false} barStyle="dark-content" />
             <AppHeader title="Fund Wallet" backIcon="close" />
-            <AppSizeBox marginTop={hp(.2)} />
+            <AppSizeBox marginTop={hp(.4)} />
             <AppCard backgroundColor={COLORS.PRIMARY} paddingVertical={hp(1)}
                justifyContent="center" alignItems="center">
                <AppText bold color={COLORS.WHITE}>Balance</AppText>
                <AppSizeBox marginTop={hp(.2)} />
-               <AppText color={COLORS.WHITE} bold fontFamily="Tomato" fontSize={wp(1.6)}>${0.00}</AppText>
+               <AppText color={COLORS.WHITE} bold fontFamily="Tomato" fontSize={6}>${0.00}</AppText>
             </AppCard>
-            <AppSizeBox marginTop={hp(.7)} />
+            <AppSizeBox marginTop={hp(.2)} />
+            <AppButton backgroundColor={'rgba(113, 135, 156, 0.1)'} onPress={() => setWState({ ...wState, openModal: true })}>
+               <PlusIcon fill="transparent" stroke={COLORS.PRIMARY} strokeWidth={2} />
+               <AppText bold color={COLORS.PRIMARY} style={{ marginLeft: 6 }}>Fund plan</AppText>
+            </AppButton>
+            <AppSizeBox marginTop={hp(.4)} />
             <View style={{ flex: 1 }}>
                <AppText>Transactions</AppText>
                <ScrollView showsVerticalScrollIndicator={false}>
@@ -77,36 +75,37 @@ export default ({ navigation, route }: HometabScreenProps<HOMESCREEN.FEED_SCREEN
                </ScrollView>
             </View>
          </AppLayout>
-         <Modal isVisible={wState.openModal} style={{ width: '100%', left: 0, marginLeft: wp(-.3) }}
+         <Modal isVisible={wState.openModal} style={{ width: '100%', left: 0, marginLeft: wp(-.3), marginBottom: hp(-1) }}
             onBackdropPress={() => setWState({ ...wState, openModal: false })}
             onBackButtonPress={() => setWState({ ...wState, openModal: false })}>
             <View style={dStyle.rateRow}>
                <View style={[FR_AC, dStyle.rroww, { borderRadius: 10 }]}>
-                  <AppCircle style={{ marginRight: wp(7) }}>
+                  <AppCircle isButton onPress={() => setWState({ ...wState, openModal: false })} style={{ marginRight: wp(7) }}>
                      <XIcon />
                   </AppCircle>
-                  <AppText fontSize={wp(1.3)} fontFamily="Tomato">About Exchange Rates</AppText>
+                  <AppText fontSize={5} semiBold fontFamily="Tomato">About Exchange Rates</AppText>
                </View>
                <View style={[FR_AC_JSB, dStyle.rroww]}>
                   <View>
-                     <AppText fontSize={wp(1)}>USD Buy Rate</AppText>
+                     <AppText fontSize={4}>USD Buy Rate</AppText>
                      <AppText style={{ marginTop: 4 }} color={COLORS.GRAY1}>We buy US dollars at this rate</AppText>
                   </View>
                   <AppText>₦490</AppText>
                </View>
                <View style={[FR_AC_JSB, dStyle.rroww]}>
                   <View>
-                     <AppText fontSize={wp(1)}>USD Sell Rate</AppText>
+                     <AppText fontSize={4}>USD Sell Rate</AppText>
                      <AppText style={{ marginTop: 4 }} color={COLORS.GRAY1}>The current value of your investments in Naira</AppText>
                   </View>
                   <AppText>₦490</AppText>
                </View>
                <AppSizeBox marginTop={hp(.3)} />
-               <AppText fontSize={wp(.7)} color={COLORS.GRAY3} textAlign="center">These exhange rates are provided by independent third parties who handle fund conversions at the prevailing parallel rates and are not set, or controlled or by Rise. They are subject to change based on market trends.</AppText>
+               <AppText fontSize={3} color={COLORS.GRAY3} textAlign="center">These exhange rates are provided by independent third parties who handle fund conversions at the prevailing parallel rates and are not set, or controlled or by Rise. They are subject to change based on market trends.</AppText>
                <AppSizeBox marginTop={hp(.5)} />
                <AppButton>
-                  <AppText color={COLORS.WHITE}>Accept & Continue</AppText>
+                  <AppText bold color={COLORS.WHITE}>Accept & Continue</AppText>
                </AppButton>
+               <AppSizeBox marginBottom={7} />
             </View>
          </Modal>
       </React.Fragment>

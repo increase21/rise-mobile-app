@@ -44,13 +44,15 @@ const AppHeader = (props: AppHederProps) => {
             </AppCircle>
          </View>
          <View style={{ width: '60%' }}>
-            <AppText fontSize={wp(1.3)} fontFamily="Tomato"
+            <AppText fontSize={6} fontFamily="Tomato"
                bold style={[dStyle.titleStyle, props?.titleStyle]}>
                {props?.title}
             </AppText>
-            <AppText textAlign="center" style={[props?.subTitleStyle,]}>
-               {props?.subTitle}
-            </AppText>
+            {props.subTitle &&
+               <AppText textAlign="center" style={[props?.subTitleStyle,]}>
+                  {props?.subTitle}
+               </AppText>
+            }
          </View>
          <View style={{ width: '20%' }}></View>
       </View>

@@ -110,6 +110,6 @@ export const AppIndicatorLoader = (props: { style?: ViewStyle, loaderColor?: str
 
 export const BellRedIndicator = (props: { bellCount: number }) => (
    <AppCircle width={wp(4)} height={hp(2)} style={dStyle.bellRed}>
-      <AppText bold fontFamily="Tomato" fontSize={wp(.7)} color={COLORS.WHITE}>{props.bellCount > 9 ? '9+' : props.bellCount}</AppText>
+      <AppText bold fontFamily="Tomato" fontSize={3} color={COLORS.WHITE}>{props.bellCount > 9 ? '9+' : props.bellCount}</AppText>
    </AppCircle>
 )

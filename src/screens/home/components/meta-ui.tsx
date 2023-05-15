@@ -41,7 +41,7 @@ export const BalanceUI = (props: { totalBalance: number, navigation: any }) => (
                <PasswordClose width={wp(4)} />
             </View>
             <View style={{ width: wp(44), paddingVertical: hp(1.4), borderBottomWidth: 1, borderBottomColor: COLORS.GRAY2 }}>
-               <AppText fontSize={wp(2)} textAlign="center">${props.totalBalance}</AppText>
+               <AppText fontSize={8} textAlign="center">${props.totalBalance}</AppText>
             </View>
             <View style={{ paddingVertical: hp(1.4), flexDirection: 'row', alignItems: 'center' }}>
                <AppText style={{ marginRight: wp(1) }}>Total Grains</AppText>

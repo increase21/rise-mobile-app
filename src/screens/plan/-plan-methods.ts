@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "react-query";
 import helpers from "../../helpers";
 import { apiUrl } from "../../constants/api-url";
-import { PlanProjectionProps, createPlanProps } from "./-plan-interface";
+import { ErrorObject, PlanProjectionProps, CeatePlanProps } from "./-plan-interface";
 
 
 class planMethods {
@@ -18,7 +18,7 @@ class planMethods {
 
    createPlan(mutateState?: any) {
 
-      const processReqest = (data: createPlanProps) => {
+      const processReqest = (data: CeatePlanProps) => {
          //if there's no email
          if (!data.plan_name) {
             return helpers.showToast("Plan is required")
@@ -52,8 +52,8 @@ class planMethods {
             }
             mutateState((d: object) => ({ ...d, showSuccess: true }))
          },
-         onError: (error) => {
-            helpers.showToast("Request Failed")
+         onError: ({ message }: ErrorObject) => {
+            helpers.showToast(message || "Request Failed")
          }
       })
       const { error, data, reset, isLoading } = mutation

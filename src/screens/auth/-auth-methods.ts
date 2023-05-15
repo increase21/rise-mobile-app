@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "react-query";
 import { AUTHSCREENS, ROOTSCREEN } from "../../constants/screens";
 import helpers from "../../helpers";
-import { createAccountProps, loginAccountProps } from "./-auth-interface";
+import { CreateAccountProps, ErrorObject, LoginAccountProps, } from "./-auth-interface";
 import { apiUrl } from "../../constants/api-url";
 import { globalData } from "../../store";
 
@@ -9,7 +9,7 @@ class authMethods {
    constructor() { }
 
 
-   validateAccountData(data: createAccountProps, navigation: any): void {
+   validateAccountData(data: CreateAccountProps, navigation: any): void {
       //validate the data that is coming in
       if (!data.fName || !/^[a-z\-]+$/i.test(data.fName)) {
          return helpers.showToast(!data.fName ? "first name is required" : "Only alphabet is required for firstname")
@@ -43,7 +43,7 @@ class authMethods {
 
       let sendLoginData: any = { email: '', password: '' }
 
-      const processReqest = (data: createAccountProps) => {
+      const processReqest = (data: CreateAccountProps) => {
          //if there's no email
          if (!data.email) {
             return helpers.showToast("email is required")
@@ -61,7 +61,7 @@ class authMethods {
             last_name: data.lName,
             email_address: data.email,
             password: data.password,
-            date_of_birth: "1" + data.dob,
+            date_of_birth: data.dob,
             username: data.nickName || undefined,
          }
          //if there's phone number
@@ -89,8 +89,8 @@ class authMethods {
             //show the success message
             setXterCheck((d: object) => ({ ...d, showSuccess: true }))
          },
-         onError: (error) => {
-            helpers.showToast("Request Failed")
+         onError: ({ message }: ErrorObject) => {
+            helpers.showToast(message || "Request Failed")
          }
       })
       const { error, data, reset, isLoading } = mutation
@@ -98,7 +98,7 @@ class authMethods {
    }
 
    loginAccount(navigation?: any) {
-      const processReqest = (data: loginAccountProps,) => {
+      const processReqest = (data: LoginAccountProps,) => {
          //if there's no email
          if (!data.email) {
             return helpers.showToast("email is required")
@@ -137,7 +137,9 @@ class authMethods {
                helpers.resetNavigation(navigation, ROOTSCREEN.HOME_SCREEN)
             }
          },
-         onError: (error) => {
+         onError: ({ message }: ErrorObject) => {
+            // console.log(error)
+            helpers.showToast(message || "Request Failed")
          }
       })
 

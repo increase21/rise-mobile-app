@@ -26,7 +26,7 @@ const PlanInfoRow = (props: PlanInfoRowProps) => (
       </AppCircle>
       <View style={{ flex: 1 }}>
          <AppText bold>{props.title}</AppText>
-         <AppText color={COLORS.GRAY1} fontSize={wp(.9)}>
+         <AppText color={COLORS.GRAY1} fontSize={3.5}>
             {props.description}
          </AppText>
       </View>

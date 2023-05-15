@@ -20,7 +20,7 @@ export default ({ navigation }: AuthScreenProps<AUTHSCREENS.SPLASH_SCREEN>) => {
          <View style={{ flex: 1, marginTop: hp(18), alignItems: 'center', }}>
             <AppLogoWhite stroke={COLORS.WHITE} fill={COLORS.WHITE} fillOpacity={0} />
             <AppSizeBox marginTop={hp(1)} />
-            <AppText color={COLORS.WHITE} textAlign="center" fontFamily="Tomato" fontSize={wp(1)}>{`Dollar investments that\nhelp you grow`}</AppText>
+            <AppText color={COLORS.WHITE} textAlign="center" fontFamily="Tomato" fontSize={4}>{`Dollar investments that\nhelp you grow`}</AppText>
             <AppSizeBox marginTop={hp(5.7)} />
             <AppText fontFamily="Tomato" color={COLORS.WHITE} textAlign="center">{`All rights reserved\n(c) 2021`}</AppText>
          </View>
